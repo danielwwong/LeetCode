@@ -17,7 +17,7 @@ return [0, 1].
 ```
 
 ### Solution:
-```
+```python
 class Solution(object):
     def twoSum(self, nums, target):
         """
