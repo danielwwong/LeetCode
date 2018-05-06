@@ -4,7 +4,7 @@
 
 [2. Add Two Numbers](#2-add-two-numbers)
 
-## 1. Two Sum
+## 1. Two Sum `#1`
 ### Problem
 Given an array of integers, return indices of the two numbers such that they add up to a specific target.
 
@@ -36,7 +36,7 @@ class Solution(object):
                     return list
 ```
 
-## 2. Add Two Numbers
+## 2. Add Two Numbers `#2`
 ### Problem
 You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.
 
