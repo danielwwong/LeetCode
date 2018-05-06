@@ -1,8 +1,8 @@
 # LeetCode
 
-[1. Two Sum](#1-two-sum)
+[1. Two Sum](#1-two-sum-1)
 
-[2. Add Two Numbers](#2-add-two-numbers)
+[2. Add Two Numbers](#2-add-two-numbers-2)
 
 ## 1. Two Sum `#1`
 ### Problem
