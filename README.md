@@ -165,6 +165,8 @@ class Solution(object):
 ```
 
 ### Note:
+Better Solution:
+
 [Pseudocode](https://leetcode.com/problems/add-two-numbers/solution/):
 - Initialize current node to dummy head of the returning list.
 - Initialize carry to 0.
