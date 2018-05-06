@@ -36,6 +36,9 @@ class Solution(object):
                     return list
 ```
 
+### Note:
+Use hash table, maps, etc. for better running time.
+
 ## 2. Add Two Numbers `#2`
 ### Problem
 You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.
@@ -160,3 +163,18 @@ class Solution(object):
                     movepointer.next = ListNode(1)
         return head
 ```
+
+### Note:
+[Pseudocode](https://leetcode.com/problems/add-two-numbers/solution/):
+- Initialize current node to dummy head of the returning list.
+- Initialize carry to 0.
+- Initialize p and q to head of l1 and l2 respectively.
+- Loop through lists l1 and l2 until you reach both ends.
+  - Set x to node p's value. If p has reached the end of l1, set to 0.
+  - Set y to node q's value. If q has reached the end of l2, set to 0.
+  - Set sum = x + y + carry.
+  - Update carry = sum / 10.
+  - Create a new node with the digit value of (sum mod 10) and set it to current node's next, then advance current node to next.
+  - Advance both p and q.
+- Check if carry = 1, if so append a new node with digit 1 to the returning list.
+- Return dummy head's next node.
