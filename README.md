@@ -358,7 +358,7 @@ Hence, we can discard the first part of A, which is A[x] and the numbers before 
 [Reference 1](http://eriol.iteye.com/blog/1172098)
 
 **Boundary Problem**
-There're different situations we should consider, for instance, what if the array's length is odd or even, or the array is shorter than \frac {k} {2}. We need to handle the boundary problem.
+There're different situations we should consider, for instance, what if the array's length is odd or even, or the array is shorter than ![img](img/1.gif). We need to handle the boundary problem.
 
 - Scenario
 
