@@ -321,6 +321,8 @@ Extend the problem to find the k-th number of the two sorted arrays:
 
 **Explanation**
 
+[Reference](http://eriol.iteye.com/blog/1172098)
+
 For instance,
 
 ```
@@ -342,30 +344,58 @@ In A, the first part has **x** numbers, the second part has **m-x** numbers, A[x
 
 Similarly, in B, the first part has **y** numbers, the second part has **n-y** numbers, B[y] is the first number in the second part. y = 3, B[y] = 10, n = 6.
 
-If A[x] <= B[x], continue. If A[x] > B[x], we switch two arrays.
+If A[x] <= B[x], continue. If A[x] > B[x], we switch the arrays.
 
-- Scenario 1:<br>
+- Scenario 1<br>
 In A, **x** numbers <= **A[x]**. In B, **y** numbers <= **B[y]**. And **A[x]** <= **B[y]**.<br>
 Hence, there're **x + y + 1** numbers <= B[y].<br>
 If **k** <= **x + y + 1**, the k-th number must be in front of **B[y]** (not including B[y]).<br>
 Hence, we can discard the second part of B, which is B[y] and the numbers after B[y].
 
-- Scenario 2:<br>
+- Scenario 2<br>
 In A, **m - x - 1** numbers >= **A[x]**. In B, **n - y - 1** numbers >= **B[y]**. And **A[x]** <= **B[y]**.<br>
 Hence, there're (m - x - 1) + (n - y - 1) + 1 = **(m + n) - (x + y + 1)** numbers >= A[x].<br>
-If **k** > **x + y + 1**, the k-th number must be after **A[x]** (not including A[x]).
+If **k** > **x + y + 1**, the k-th number must be after **A[x]** (not including A[x]).<br>
 Hence, we can discard the first part of A, which is A[x] and the numbers before A[x].
-
-[Reference 1](http://eriol.iteye.com/blog/1172098)
 
 **Boundary Problem**
 
-There're different situations we should consider, for instance, what if the array's length is odd or even, or the array is shorter than <img src="img/1.png" height="38px">. We need to handle the boundary problem.
+[Reference](https://blog.csdn.net/lqglqglqg/article/details/48845225)
 
-- Scenario
+There're different situations we should consider, for instance, if the array's length is odd or even, or the array is shorter than <img src="img/1.png" height="38px">. We need to handle the boundary problem.
 
+- Scenario 1<br>
+**both arrays' lengths are odd**<br>
+Set the median of a is a[x], the median of b is b[y].<br>
+![img](img/6.jpg)<br>
+The length of array a is **2x + 1**, the length of array b is **2y + 1**. Total length is **2(x + y + 1)**.<br>
+<br>
+If k <= x + y + 1, we can discard the yellow part. Blue part below is x + y + 1. Then, we find the **k-th** number in the new arrays.<br>
+![img](img/7.jpg)<br>
+<br>
+If k > x + y + 1, we can discard the yellow part. Blue part below is x + y + 1. Then, we find the **(k - x - 1)-th** number in the new arrays.<br>
+![img](img/8.jpg)<br>
+If a[x] > b[y], we simply switch the arrays.
 
+- Scenario 2<br>
+**both arrays' lengths are even**<br>
+Set the **upper** median of a is a[x], the **lower** median of b is b[y].<br>
+![img](img/9.jpg)<br>
+The length of array a is **2x + 2**, the length of array b is **2y**. Total length is **2(x + y + 1)**.<br>
+<br>
+If k <= x + y + 1, we can discard the yellow part. Blue part below is x + y + 1. Then, we find the **k-th** number in the new arrays.<br>
+![img](img/10.jpg)<br>
+<br>
+If k > x + y + 1, we can discard the yellow part. Blue part below is x + y + 1. Then, we find the **(k - x - 1)-th** number in the new arrays.<br>
+![img](img/11.jpg)<br>
+If a[x] > b[y], we simply switch the arrays.
 
+- Scenario 3<br>
+**one of the arrays' length is odd, the other one is even**
+  - If k = 1, we return min(a[0], b[0]).
+  - If k > 1, and if a[0] < b[0], a[0] would be the smallest number of the two arrays. We discard the a[0], then find the **(k - 1)-th** number in the new arrays. Array a's length will be subtracted by 1, the problem will be transformed to Scenario 1 or Scenario 2.
+
+**Others**
 
 Finding the median of the two sorted arrays can be treated as
 1. finding the <img src="img/2.png" height="38px">-th number as **i**, and <img src="img/3.png" height="38px">-th number as **j**, of the two sorted arrays, then the median is <img src="img/4.png" height="38px">, if **m + n** is even;
