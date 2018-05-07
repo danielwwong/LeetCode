@@ -1,10 +1,12 @@
 # LeetCode
 
-[1. Two Sum](#1-two-sum-1)
+[1. Two Sum `#1`](#1-two-sum-1)
 
-[2. Add Two Numbers](#2-add-two-numbers-2)
+[2. Add Two Numbers `#2`](#2-add-two-numbers-2)
 
-[3. Longest Substring Without Repeating Characters](#3-longest-substring-without-repeating-characters-3)
+[3. Longest Substring Without Repeating Characters `#3`](#3-longest-substring-without-repeating-characters-3)
+
+[4. Median of Two Sorted Arrays `#4`](#4-median-of-two-sorted-arrays-4)
 
 ## 1. Two Sum `#1`
 ### Problem
@@ -285,3 +287,35 @@ output `length = 4`<br>
 [Sliding Window](https://leetcode.com/problems/longest-substring-without-repeating-characters/solution/)
 
 May 6th, 2018
+
+## 4. Median of Two Sorted Arrays `#4`
+### Problem
+There are two sorted arrays nums1 and nums2 of size m and n respectively.
+
+Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).
+
+### Example
+1. Example
+```
+nums1 = [1, 3]
+nums2 = [2]
+
+The median is 2.0
+```
+
+2. Example
+```
+nums1 = [1, 2]
+nums2 = [3, 4]
+
+The median is (2 + 3)/2 = 2.5
+```
+
+### Solution
+```python
+
+```
+
+### Note
+
+May 7th, 2018
