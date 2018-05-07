@@ -358,7 +358,7 @@ Hence, we can discard the first part of A, which is A[x] and the numbers before 
 [Reference 1](http://eriol.iteye.com/blog/1172098)
 
 **Boundary Problem**
-There're different situations we should consider, for instance, what if the array's length is odd or even, or the array is shorter than ![img](img/1.gif) <img src="img/2.png" width="25%" height="25%">. We need to handle the boundary problem.
+There're different situations we should consider, for instance, what if the array's length is odd or even, or the array is shorter than <img src="img/1.png" height="38px">. We need to handle the boundary problem.
 
 - Scenario
 
@@ -366,7 +366,7 @@ There're different situations we should consider, for instance, what if the arra
 
 
 Finding the median of the two sorted arrays can be treated as
-1. finding the $(\frac {m+n} {2})$-th number as $i$, and $(\frac {m+n} {2} + 1)$-th number as $j$, of the two sorted arrays, then the median is $\frac {i+j} {2}$, if $m+n$ is even;
-2. finding the $(\frac {m+n+1} {2})$-th number of the two sorted arrays, if $m+n$ is odd.
+1. finding the <img src="img/2.png" height="38px">-th number as **i**, and <img src="img/3.png" height="38px">-th number as **j**, of the two sorted arrays, then the median is <img src="img/4.png" height="38px">, if **m + n** is even;
+2. finding the <img src="img/5.png" height="38px">-th number of the two sorted arrays, if **m + n** is odd.
 
 May 7th, 2018
