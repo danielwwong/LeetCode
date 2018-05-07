@@ -366,7 +366,7 @@ There're different situations we should consider, for instance, if the array's l
 
 - Scenario 1<br>
 **both arrays' lengths are odd**<br>
-Set the median of a as a[x], the median of b is b[y].<br>
+Set the median of a as a[x], the median of b as b[y].<br>
 ![img](img/6.jpg)<br>
 The length of array a is **2x + 1**, the length of array b is **2y + 1**. Total length is **2(x + y + 1)**.
   - If k <= x + y + 1, we can discard the yellow part. Blue part below is x + y + 1. Then, we find the **k-th** number in the new arrays.<br>
@@ -377,7 +377,7 @@ The length of array a is **2x + 1**, the length of array b is **2y + 1**. Total 
 
 - Scenario 2<br>
 **both arrays' lengths are even**<br>
-Set the **upper** median of a as a[x], the **lower** median of b is b[y].<br>
+Set the **upper** median of a as a[x], the **lower** median of b as b[y].<br>
 ![img](img/9.jpg)<br>
 The length of array a is **2x + 2**, the length of array b is **2y**. Total length is **2(x + y + 1)**.
   - If k <= x + y + 1, we can discard the yellow part. Blue part below is x + y + 1. Then, we find the **k-th** number in the new arrays.<br>
