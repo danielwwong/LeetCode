@@ -295,7 +295,7 @@ There are two sorted arrays nums1 and nums2 of size m and n respectively.
 Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).
 
 ### Example
-1. Example
+- Example 1:
 ```
 nums1 = [1, 3]
 nums2 = [2]
@@ -303,7 +303,7 @@ nums2 = [2]
 The median is 2.0
 ```
 
-2. Example
+- Example 2:
 ```
 nums1 = [1, 2]
 nums2 = [3, 4]
@@ -317,5 +317,13 @@ The median is (2 + 3)/2 = 2.5
 ```
 
 ### Note
+Extend the problem to find the k-th number of the two sorted arrays:
+
+For instance,
+nums1
+
+Finding the median of the two sorted arrays can be treated as
+1. finding the $(\frac {m+n} {2})$-th number as $i$, and $(\frac {m+n} {2} + 1)$-th number as $j$, of the two sorted arrays, then the median is $\frac {i+j} {2}$, if $m+n$ is even;
+2. finding the $(\frac {m+n+1} {2})$-th number of the two sorted arrays, if $m+n$ is odd.
 
 May 7th, 2018
