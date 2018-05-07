@@ -320,6 +320,7 @@ The median is (2 + 3)/2 = 2.5
 Extend the problem to find the k-th number of the two sorted arrays:
 
 **Explanation**
+
 For instance,
 
 ```
@@ -343,21 +344,22 @@ Similarly, in B, the first part has **y** numbers, the second part has **n-y** n
 
 If A[x] <= B[x], continue. If A[x] > B[x], we switch two arrays.
 
-- Scenario 1:
-In A, **x** numbers <= **A[x]**. In B, **y** numbers <= **B[y]**. And **A[x]** <= **B[y]**.
-Hence, there're **x + y + 1** numbers <= B[y].
-If **k** <= **x + y + 1**, the k-th number must be in front of **B[y]** (not including B[y]).
+- Scenario 1:<br>
+In A, **x** numbers <= **A[x]**. In B, **y** numbers <= **B[y]**. And **A[x]** <= **B[y]**.<br>
+Hence, there're **x + y + 1** numbers <= B[y].<br>
+If **k** <= **x + y + 1**, the k-th number must be in front of **B[y]** (not including B[y]).<br>
 Hence, we can discard the second part of B, which is B[y] and the numbers after B[y].
 
-- Scenario 2:
-In A, **m - x - 1** numbers >= **A[x]**. In B, **n - y - 1** numbers >= **B[y]**. And **A[x]** <= **B[y]**.
-Hence, there're (m - x - 1) + (n - y - 1) + 1 = **(m + n) - (x + y + 1)** numbers >= A[x].
+- Scenario 2:<br>
+In A, **m - x - 1** numbers >= **A[x]**. In B, **n - y - 1** numbers >= **B[y]**. And **A[x]** <= **B[y]**.<br>
+Hence, there're (m - x - 1) + (n - y - 1) + 1 = **(m + n) - (x + y + 1)** numbers >= A[x].<br>
 If **k** > **x + y + 1**, the k-th number must be after **A[x]** (not including A[x]).
 Hence, we can discard the first part of A, which is A[x] and the numbers before A[x].
 
 [Reference 1](http://eriol.iteye.com/blog/1172098)
 
 **Boundary Problem**
+
 There're different situations we should consider, for instance, what if the array's length is odd or even, or the array is shorter than <img src="img/1.png" height="38px">. We need to handle the boundary problem.
 
 - Scenario
