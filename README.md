@@ -319,8 +319,51 @@ The median is (2 + 3)/2 = 2.5
 ### Note
 Extend the problem to find the k-th number of the two sorted arrays:
 
+**Explanation**
 For instance,
-nums1
+
+```
+A = [1, 2, 5, 6, 9, 12]
+B = [3, 7, 8, 10, 11, 15]
+A[0] = 1, B[0] = 3
+```
+
+Split each arrays into two equal-long subarrays.
+
+```
+A = [1, 2, 5 | 6, 9, 12]
+B = [3, 7, 8 | 10, 11, 15]
+```
+
+Split the each array equally.
+
+In A, the first part has **x** numbers, the second part has **m-x** numbers, A[x] is the first number in the second part. x = 3, A[x] = 6, m = 6.
+
+Similarly, in B, the first part has **y** numbers, the second part has **n-y** numbers, B[y] is the first number in the second part. y = 3, B[y] = 10, n = 6.
+
+If A[x] <= B[x], continue. If A[x] > B[x], we switch two arrays.
+
+- Scenario 1:
+In A, **x** numbers <= **A[x]**. In B, **y** numbers <= **B[y]**. And **A[x]** <= **B[y]**.
+Hence, there're **x + y + 1** numbers <= B[y].
+If **k** <= **x + y + 1**, the k-th number must be in front of **B[y]** (not including B[y]).
+Hence, we can discard the second part of B, which is B[y] and the numbers after B[y].
+
+- Scenario 2:
+In A, **m - x - 1** numbers >= **A[x]**. In B, **n - y - 1** numbers >= **B[y]**. And **A[x]** <= **B[y]**.
+Hence, there're (m - x - 1) + (n - y - 1) + 1 = **(m + n) - (x + y + 1)** numbers >= A[x].
+If **k** > **x + y + 1**, the k-th number must be after **A[x]** (not including A[x]).
+Hence, we can discard the first part of A, which is A[x] and the numbers before A[x].
+
+[Reference 1](http://eriol.iteye.com/blog/1172098)
+
+**Boundary Problem**
+There're different situations we should consider, for instance, what if the array's length is odd or even, or the array is shorter than \frac {k} {2}. We need to handle the boundary problem.
+
+- Scenario
+
+
+
 
 Finding the median of the two sorted arrays can be treated as
 1. finding the $(\frac {m+n} {2})$-th number as $i$, and $(\frac {m+n} {2} + 1)$-th number as $j$, of the two sorted arrays, then the median is $\frac {i+j} {2}$, if $m+n$ is even;
