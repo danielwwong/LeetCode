@@ -313,7 +313,83 @@ The median is (2 + 3)/2 = 2.5
 
 ### Solution
 ```python
+class Solution(object):
+    def findMedianSortedArrays(self, nums1, nums2):
+        """
+        :type nums1: List[int]
+        :type nums2: List[int]
+        :rtype: float
+        """
+        len_a = len(nums1)
+        len_b = len(nums2)
+        if ((len_a + len_b) % 2) == 1: #one odd, one even
+            k = (len_a + len_b + 1) / 2
+            return self.find_k(k, nums1, nums2, len_a, len_b)
+        else:
+            k_1 = (len_a + len_b) / 2
+            k_2 = (len_a + len_b) / 2 + 1
+            array_1 = nums1[:]
+            array_2 = nums2[:]
+            i = self.find_k(k_1, nums1, nums2, len_a, len_b)
+            j = self.find_k(k_2, array_1, array_2, len_a, len_b)
+            return (float(i) + j) / 2
 
+    def find_k(self, k, nums1, nums2, len_a, len_b):
+        if len_a == 0:
+            return nums2[k - 1]
+        elif len_b == 0:
+            return nums1[k - 1]
+        elif (len_a % 2) == 1 and (len_b % 2) == 1: #two odd
+            x = (len_a - 1) / 2
+            y = (len_b - 1) / 2
+            position = x + y + 1
+            if nums1[x] > nums2[y]:
+                array_a = nums2
+                array_b = nums1
+                temp = x
+                x = y
+                y = temp
+            else:
+                array_a = nums1
+                array_b = nums2
+            if k <= position:
+                del array_b[y : len_b]
+                return self.find_k(k, array_a, array_b, len(array_a), len(array_b))
+            else:
+                del array_a[0 : (x + 1)]
+                return self.find_k(k - x - 1, array_a, array_b, len(array_a), len(array_b))
+        elif (len_a % 2) == 0 and (len_b % 2) == 0: #two even
+            x = len_a / 2 - 1
+            y = len_b / 2
+            position = x + y + 1
+            if nums1[x] > nums2[y]:
+                array_a = nums2
+                array_b = nums1
+                temp = x
+                x = y
+                y = temp
+            else:
+                array_a = nums1
+                array_b = nums2
+            if k <= position:
+                del array_b[y : len_b]
+                return self.find_k(k, array_a, array_b, len(array_a), len(array_b))
+            else:
+                del array_a[0 : (x + 1)]
+                return self.find_k(k - x - 1, array_a, array_b, len(array_a), len(array_b))
+        else:
+            if k == 1:
+                return min(nums1[0], nums2[0])
+            else:
+                if nums1[0] > nums2[0]:
+                    array_a = nums2
+                    array_b = nums1
+                    return self.find_k(k, array_a, array_b, len(array_a), len(array_b))
+                else:
+                    array_a = nums1
+                    array_b = nums2
+                    del array_a[0]
+                    return self.find_k(k - 1, array_a, array_b, len(array_a), len(array_b))
 ```
 
 ### Note
@@ -396,5 +472,11 @@ The length of array a is **2x + 2**, the length of array b is **2y**. Total leng
 Finding the median of the two sorted arrays can be treated as
 1. finding the <img src="img/2.png" height="38px">-th number as **i**, and <img src="img/3.png" height="38px">-th number as **j**, of the two sorted arrays, then the median is <img src="img/4.png" height="38px">, if **m + n** is even;
 2. finding the <img src="img/5.png" height="38px">-th number of the two sorted arrays, if **m + n** is odd.
+
+**Important Stuff**
+1. Need to check on finding k-th number, or (k - x - 1)-th number, or (k - 1)-th number.
+2. Need to check on k and the subscript. The array starts from 0, but k starts form 1.
+3. Python's variable is only a name tag. The array after inputting to the functions will be altered globally. Copy the arrays if needed. Use `copy_list = original_list[:]` to copy. Knows what it means and how to use slice operator. `:` in Python is a slice operator.
+4. In Python, if you want to delete some list elements. For instance, for `a = [1, 2, 3]`, `del a[0 : 2]` will result in `a = [3]`. For `a = [1]`, `del a[0 : 1]` will result in `a = []`.
 
 May 7th, 2018
