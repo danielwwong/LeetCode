@@ -478,5 +478,6 @@ Finding the median of the two sorted arrays can be treated as
 2. Need to check on k and the subscript. The array starts from 0, but k starts form 1.
 3. Python's variable is only a name tag. The array after inputting to the functions will be altered globally. Copy the arrays if needed. Use `copy_list = original_list[:]` to copy. Knows what it means and how to use slice operator. `:` in Python is a slice operator.
 4. In Python, if you want to delete some list elements. For instance, for `a = [1, 2, 3]`, `del a[0 : 2]` will result in `a = [3]`. For `a = [1]`, `del a[0 : 1]` will result in `a = []`.
+5. Return the value from recursion should be handled. It will only return to one upper layer, will not return to the top layer. We should return the value recursively, too.
 
 May 7th, 2018
