@@ -548,8 +548,6 @@ class Solution(object):
         :type s: str
         :rtype: str
         """
-        #middle add \1
-        #first and last add \0
         new_s = '\0'
         for i in range(len(s) - 1):
             new_s = new_s + s[i] + '\1'
@@ -628,5 +626,10 @@ class Solution(object):
   aaa
   We checked to the second 'a', we found that the length of the palindromic string centered in the second 'a' is 3, we stop the checking. Because it must be the longest one.
   ```
+
+3.
+  The best solution is Manacher's Algorithm. It only takes liner time. O(n)<br>
+  &ensp;&ensp;My solution is O(n<sup>2</sup>).<br>
+  &ensp;&ensp;Use KMP Algorithm may take O(nlogn).
 
 May 9th, 2018
