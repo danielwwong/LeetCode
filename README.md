@@ -541,12 +541,13 @@ class Solution(object):
 ```
 
 ### Note
-1. - Handle the Original String<br>
-Example:<br>
-Original String: babad<br>
-After Handled: $b#a#b#a#d$<br>
-In Solution 1, I used '\0' to be '$' and '\1' to be '#' in order to avoid the situation that if the original string have the character '$' or '#'.<br>
-After handling the string, we don't need to check about whether the palindromic string is odd or even.
+1. 
+  - Handle the Original String<br>
+  Example:<br>
+  Original String: babad<br>
+  After Handled: $b#a#b#a#d$<br>
+  In Solution 1, I used '\0' to be '$' and '\1' to be '#' in order to avoid the situation that if the original string have the character '$' or '#'.<br>
+  After handling the string, we don't need to check about whether the palindromic string is odd or even.
   - When hitting '\0' ('$'), means it reaches to the edge, stop.
   - Record the length of the palindromic by adding 2 when having the same character in both of the side.<br>
   If having '\1' ('#') in both of the side, do not add numbers.<br>
