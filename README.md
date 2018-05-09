@@ -8,6 +8,8 @@
 
 [4. Median of Two Sorted Arrays `#4`](#4-median-of-two-sorted-arrays-4)
 
+[5. Longest Palindromic Substring `#5`](#5-longest-palindromic-substring-5)
+
 ## 1. Two Sum `#1`
 ### Problem
 Given an array of integers, return indices of the two numbers such that they add up to a specific target.
@@ -481,3 +483,79 @@ Finding the median of the two sorted arrays can be treated as
 5. Return the value from recursion should be handled. It will only return to one upper layer, will not return to the top layer. We should return the value recursively, too.
 
 May 7th, 2018
+
+## 5. Longest Palindromic Substring `#5`
+### Problem
+Given a string s, find the longest palindromic substring in s. You may assume that the maximum length of s is 1000.
+
+### Example
+- Example 1:
+```
+Input: "babad"
+Output: "bab"
+Note: "aba" is also a valid answer.
+```
+
+- Example 2:
+```
+Input: "cbbd"
+Output: "bb"
+```
+
+### Solution
+1. Exceeds Runtime Limit
+```python
+class Solution(object):
+    def longestPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        new_s = '\0'
+        for i in range(len(s) - 1):
+            new_s = new_s + s[i] + '\1'
+        new_s = new_s + s[len(s) - 1] + '\0'
+        length = []
+        for i in range(len(new_s)):
+            if new_s[i] == '\0':
+                continue
+            else:
+                j = 1
+                radius = 0
+                while new_s[i - j] != '\0' and new_s[i + j] != '\0' and new_s[i - j] == new_s[i + j]:
+                    if new_s[i + j] != '\1':
+                        radius += 2
+                    j += 1
+                if new_s[i] != '\1':
+                    radius += 1
+                length.append(radius)
+        result = []
+        if (max(length) % 2) == 1:
+            for i in range(max(length)):
+                result.append(s[length.index(max(length)) / 2 - max(length) / 2 + i])
+        else:
+            for i in range(max(length)):
+                result.append(s[(length.index(max(length)) + 1) / 2 - max(length) / 2 + i])
+        result_str = ''.join(result)
+        return result_str
+```
+
+### Note
+1. - Handle the Original String<br>
+Example:<br>
+Original String: babad<br>
+After Handled: $b#a#b#a#d$<br>
+In Solution 1, I used '\0' to be '$' and '\1' to be '#' in order to avoid the situation that if the original string have the character '$' or '#'.<br>
+After handling the string, we don't need to check about whether the palindromic string is odd or even.
+  - When hitting '\0' ('$'), means it reaches to the edge, stop.
+  - Record the length of the palindromic by adding 2 when having the same character in both of the side.<br>
+  If having '\1' ('#') in both of the side, do not add numbers.<br>
+  In the end, check the middle point. If the middle point is not '\1' ('#'), add 1.<br>
+  It will have the length of the palindromic string in the original string.<br>
+  ```
+  a b a b d
+  $ a # b # a # b # d $
+  - 1 0 3 0 3 0 1 0 1 -
+  ```
+
+May 9th, 2018
