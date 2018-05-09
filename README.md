@@ -628,7 +628,7 @@ class Solution(object):
   ```
 
 3.
-  The best solution is Manacher's Algorithm. It only takes liner time. O(n)<br>
+  &ensp;&ensp;The best solution is Manacher's Algorithm. It only takes liner time. O(n)<br>
   &ensp;&ensp;My solution is O(n<sup>2</sup>).<br>
   &ensp;&ensp;Use KMP Algorithm may take O(nlogn).
 
