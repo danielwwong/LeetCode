@@ -561,6 +561,7 @@ class Solution(object):
   ```
   ```python
   length = [1, 0, 3, 0, 3, 0, 1, 0, 1]
+  # output
   max(length) = 3
   length.index(max(length)) = 2
   ```
@@ -574,5 +575,8 @@ class Solution(object):
   result_str = 'bab'
   ```
   - In Python, Strings cannot be altered, but Lists can.
+
+2.
+  - a
 
 May 9th, 2018
