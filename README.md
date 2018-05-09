@@ -541,7 +541,7 @@ class Solution(object):
 ```
 
 ### Note
-1. 
+1.
   - Handle the Original String<br>
   Example:<br>
   Original String: babad<br>
@@ -558,6 +558,11 @@ class Solution(object):
   $ b # a # b # a # d $
   - 1 0 3 0 3 0 1 0 1 -
   Maximum = 3
+  ```
+  ```python
+  length = [1, 0, 3, 0, 3, 0, 1, 0, 1]
+  max(length) = 3
+  length.index(max(length)) = 2
   ```
   - We know that the maximum palindromic length is 3. Then we append the characters in the original string to a new list.
   - After we have the result list, we have to transform the list to string.<br>
