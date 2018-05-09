@@ -540,6 +540,47 @@ class Solution(object):
         return result_str
 ```
 
+2. Optimized Solution
+```python
+class Solution(object):
+    def longestPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        #middle add \1
+        #first and last add \0
+        new_s = '\0'
+        for i in range(len(s) - 1):
+            new_s = new_s + s[i] + '\1'
+        new_s = new_s + s[len(s) - 1] + '\0'
+        length = []
+        for i in range(len(new_s)):
+            if new_s[i] == '\0':
+                continue
+            else:
+                j = 1
+                radius = 0
+                while new_s[i - j] != '\0' and new_s[i + j] != '\0' and new_s[i - j] == new_s[i + j]:
+                    if new_s[i + j] != '\1':
+                        radius += 2
+                    j += 1
+                if new_s[i] != '\1':
+                    radius += 1
+                length.append(radius)
+                if radius == len(s):
+                    break
+        result = []
+        if (max(length) % 2) == 1:
+            for i in range(max(length)):
+                result.append(s[length.index(max(length)) / 2 - max(length) / 2 + i])
+        else:
+            for i in range(max(length)):
+                result.append(s[(length.index(max(length)) + 1) / 2 - max(length) / 2 + i])
+        result_str = ''.join(result)
+        return result_str
+```
+
 ### Note
 1.
   - Handle the Original String<br>
@@ -577,6 +618,15 @@ class Solution(object):
   - In Python, Strings cannot be altered, but Lists can.
 
 2.
-  - a
+  - Only adding one if statement.<br>
+  If the length of the palindromic string is as long as the original string. That would be the longest palindromic string, we don't need to check the remaining characters.
+  ```python
+  if radius == len(s):
+      break
+  ```
+  ```
+  aaa
+  We checked to the second 'a', we found that the length of the palindromic string centered in the second 'a' is 3, we stop the checking. Because it must be the longest one.
+  ```
 
 May 9th, 2018
