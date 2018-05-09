@@ -553,9 +553,20 @@ After handling the string, we don't need to check about whether the palindromic 
   In the end, check the middle point. If the middle point is not '\1' ('#'), add 1.<br>
   It will have the length of the palindromic string in the original string.<br>
   ```
-  a b a b d
-  $ a # b # a # b # d $
+  b a b a d
+  $ b # a # b # a # d $
   - 1 0 3 0 3 0 1 0 1 -
+  Maximum = 3
   ```
+  - We know that the maximum palindromic length is 3. Then we append the characters in the original string to a new list.
+  - After we have the result list, we have to transform the list to string.<br>
+  ```python
+  # result is a list, result_str is a string.
+  result_str = ''.join(result)
+  # output
+  result = [u'b', u'a', u'b']
+  result_str = 'bab'
+  ```
+  - In Python, Strings cannot be altered, but Lists can.
 
 May 9th, 2018
