@@ -702,7 +702,8 @@ class Solution(object):
 
 2. Use mod operation to determine the index of the list.
 
-3. ```
+3. For instance,
+```
 0     6       12
 1   5 7    11 13
 2 4   8 10    14
