@@ -723,6 +723,6 @@ It is a loop for 2 * numRows - 2 digits.
 5. For 0-3, which are < numRows. I insert the character to its according list.<br>
 For 4-5, which are >= numRows. I insert the character to its according list by reverse order.
 
-6. In the end, we join all lists together and transform it to be a string.
+6. In the end, I join all lists together and transform it to be a string.
 
 May 9th, 2018
