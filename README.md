@@ -10,6 +10,8 @@
 
 [5. Longest Palindromic Substring `#5`](#5-longest-palindromic-substring-5)
 
+[6. ZigZag Conversion `#6`](#6-zigzag-conversion-6)
+
 ## 1. Two Sum `#1`
 ### Problem
 Given an array of integers, return indices of the two numbers such that they add up to a specific target.
@@ -631,5 +633,95 @@ class Solution(object):
   &ensp;&ensp;The best solution is Manacher's Algorithm. It only takes liner time. O(n)<br>
   &ensp;&ensp;My solution is O(n<sup>2</sup>).<br>
   &ensp;&ensp;Use KMP Algorithm may take O(nlogn).
+
+May 9th, 2018
+
+## 6. ZigZag Conversion `#6`
+### Problem
+The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)
+```
+P   A   H   N
+A P L S I I G
+Y   I   R
+```
+And then read line by line: "PAHNAPLSIIGYIR"
+
+Write the code that will take a string and make this conversion given a number of rows:
+```
+string convert(string s, int numRows);
+```
+
+### Example
+- Example 1:
+```
+Input: s = "PAYPALISHIRING", numRows = 3
+Output: "PAHNAPLSIIGYIR"
+```
+
+- Example 2:
+```
+Input: s = "PAYPALISHIRING", numRows = 4
+Output: "PINALSIGYAHRPI"
+Explanation:
+
+P     I    N
+A   L S  I G
+Y A   H R
+P     I
+```
+
+### Solution
+```python
+class Solution(object):
+    def convert(self, s, numRows):
+        """
+        :type s: str
+        :type numRows: int
+        :rtype: str
+        """
+        rows = []
+        if numRows == 1:
+            return s
+        else:
+            for i in range(numRows):
+                rows.append([])
+            for i in range(len(s)):
+                position = i % (2 * numRows - 2)
+                if position <= numRows - 1:
+                    rows[position].append(s[i])
+                else:
+                    rows[(numRows - 1) - (position % numRows + 1)].append(s[i])
+            result_str = ''
+            for i in range(numRows):
+                result_str = result_str + ''.join(rows[i])
+            return result_str
+```
+
+### Note
+1. Find the pattern. Read the problem carefully. It's given the zigzag string and output the line by line string. Not the other way around.
+
+2. Use mod operation to determine the index of the list.
+
+3. ```
+0     6       12
+1   5 7    11 13
+2 4   8 10    14
+3     9
+
+0
+1   5
+2 4
+3
+
+It is a loop of the first 5 digits in numRows = 4.
+It is a loop for 2 * numRows - 2 digits.
+```
+
+4. We build 4 lists for numRows = 4.
+
+5. For 0-3, which are < numRows. I insert the character to its according list.<br>
+For 4-5, which are >=numRows. I insert the character to its according list by reverse order.
+
+6. In the end, we join all lists together and transform it to be a string.
 
 May 9th, 2018
