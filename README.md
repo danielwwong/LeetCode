@@ -721,7 +721,7 @@ It is a loop for 2 * numRows - 2 digits.
 4. We build 4 lists for numRows = 4.
 
 5. For 0-3, which are < numRows. I insert the character to its according list.<br>
-For 4-5, which are >=numRows. I insert the character to its according list by reverse order.
+For 4-5, which are >= numRows. I insert the character to its according list by reverse order.
 
 6. In the end, we join all lists together and transform it to be a string.
 
