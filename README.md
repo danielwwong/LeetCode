@@ -1029,7 +1029,11 @@ class Solution(object):
 ```
 
 ### Note
-1. Use log10 function.
+1. Use log10 function to get how many digits in a number for number > 0.<br>
+```python
+from math import log10
+digits = int(log10(x) + 1)
+```
 2. For instance:<br>
 `number = 123456`<br>
   - 1<sup>st</sup> digit: 123456 / 10<sup>0</sup> % 10 = 6
