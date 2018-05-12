@@ -16,6 +16,8 @@
 
 [8. String to Integer (atoi) `#8`](#8-string-to-integer-atoi-8)
 
+[9. Palindrome Number `#9`](#9-palindrome-number-9)
+
 ## 1. Two Sum `#1`
 ### Problem
 Given an array of integers, return indices of the two numbers such that they add up to a specific target.
@@ -963,3 +965,78 @@ class Solution(object):
 2. Return something can mean `True` in Python.
 
 May 11th, 2018
+
+## 9. Palindrome Number `#9`
+### Problem
+Determine whether an integer is a palindrome. An integer is a palindrome when it reads the same backward as forward.
+
+**Follow up:**
+
+Coud you solve it without converting the integer to a string?
+
+### Example
+- Example 1:
+```
+Input: 121
+Output: true
+```
+
+- Example 2:
+```
+Input: -121
+Output: false
+Explanation: From left to right, it reads -121. From right to left, it becomes 121-. Therefore it is not a palindrome.
+```
+
+- Example 3:
+```
+Input: 10
+Output: false
+Explanation: Reads 01 from right to left. Therefore it is not a palindrome.
+```
+
+### Solution
+```python
+from math import log10
+class Solution(object):
+    def isPalindrome(self, x):
+        """
+        :type x: int
+        :rtype: bool
+        """
+        if x < 0:
+            return False
+        elif x < 10:
+            return True
+        else:
+            digits = int(log10(x) + 1)
+            if digits % 2 == 0:
+                j = digits / 2
+                for i in range(j):
+                    if (x / (10 ** (j + i)) % 10) == (x / (10 ** (j - i - 1)) % 10):
+                        continue
+                    else:
+                        return False
+                return True
+            else:
+                j = (digits - 1) / 2
+                for i in range(j):
+                    if (x / (10 ** (j + i + 1)) % 10) == (x / (10 ** (j - i - 1)) % 10):
+                        continue
+                    else:
+                        return False
+                return True
+```
+
+### Note
+1. Use log10 function.
+2. For instance:<br>
+`number = 123456`<br>
+  - 1<sup>st</sup> digit: 123456 / 10<sup>0</sup> % 10 = 6
+  - 2<sup>nd</sup> digit: 123456 / 10<sup>1</sup> % 10 = 5
+  - 3<sup>rd</sup> digit: 123456 / 10<sup>2</sup> % 10 = 4
+  - 4<sup>th</sup> digit: 123456 / 10<sup>3</sup> % 10 = 3
+  - 5<sup>th</sup> digit: 123456 / 10<sup>4</sup> % 10 = 2
+  - 6<sup>th</sup> digit: 123456 / 10<sup>5</sup> % 10 = 1
+
+May 12th, 2018
