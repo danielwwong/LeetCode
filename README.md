@@ -14,6 +14,8 @@
 
 [7. Reverse Integer `#7`](#7-reverse-integer-7)
 
+[8. String to Integer (atoi) `#8`](#8-string-to-integer-atoi-8)
+
 ## 1. Two Sum `#1`
 ### Problem
 Given an array of integers, return indices of the two numbers such that they add up to a specific target.
@@ -802,3 +804,162 @@ class Solution(object):
 3. In Python, the integer range is much more flexible than in C++, therefore, we should manually check the reversed integer.
 
 May 10th, 2018
+
+## 8. String to Integer (atoi) `#8`
+### Problem
+Implement `atoi` which converts a string to an integer.
+
+The function first discards as many whitespace characters as necessary until the first non-whitespace character is found. Then, starting from this character, takes an optional initial plus or minus sign followed by as many numerical digits as possible, and interprets them as a numerical value.
+
+The string can contain additional characters after those that form the integral number, which are ignored and have no effect on the behavior of this function.
+
+If the first sequence of non-whitespace characters in str is not a valid integral number, or if no such sequence exists because either str is empty or it contains only whitespace characters, no conversion is performed.
+
+If no valid conversion could be performed, a zero value is returned.
+
+**Note:**
+
+- Only the space character `' '` is considered as whitespace character.
+- Assume we are dealing with an environment which could only store integers within the 32-bit signed integer range: [−2<sup>31</sup>,  2<sup>31</sup> − 1]. If the numerical value is out of the range of representable values, INT_MAX (2<sup>31</sup> − 1) or INT_MIN (−2<sup>31</sup>) is returned.
+
+### Example
+- Example 1:
+```
+Input: "42"
+Output: 42
+```
+
+- Example 2:
+```
+Input: "   -42"
+Output: -42
+Explanation: The first non-whitespace character is '-', which is the minus sign.
+             Then take as many numerical digits as possible, which gets 42.
+```
+
+- Example 3:
+```
+Input: "4193 with words"
+Output: 4193
+Explanation: Conversion stops at digit '3' as the next character is not a numerical digit.
+```
+
+- Example 4:
+```
+Input: "words and 987"
+Output: 0
+Explanation: The first non-whitespace character is 'w', which is not a numerical
+             digit or a +/- sign. Therefore no valid conversion could be performed.
+```
+
+- Example 5:
+```
+Input: "-91283472332"
+Output: -2147483648
+Explanation: The number "-91283472332" is out of the range of a 32-bit signed integer.
+             Therefore INT_MIN (−2^31) is returned.
+```
+
+### Solution
+```python
+class Solution(object):
+    def myAtoi(self, str):
+        """
+        :type str: str
+        :rtype: int
+        """
+        i = 0
+        if len(str) == 0:
+            return 0
+        while i < len(str) and str[i] == ' ':
+            i += 1
+        if i == len(str):
+            return 0
+        first = self.checkDigit(str[i])
+        digitList = []
+        if first == False:
+            return 0
+        else:
+            j = 0
+            if first == True:
+                while (i + j) < len(str) and self.checkDigit(str[i + j]) == True:
+                    digitList.append(str[i + j])
+                    j += 1
+            else:
+                if i == len(str) - 1:
+                    return 0
+                if self.checkDigit(str[i + 1]) == True:
+                    while (i + j + 1) < len(str) and self.checkDigit(str[i + j + 1]) == True:
+                        digitList.append(str[i + j + 1])
+                        j += 1
+                else:
+                    return 0
+            result = 0
+            if digitList[0] == '0':
+                j -= 1
+                for k in range(1, j + 1):
+                    digit = self.convertStr(digitList[k])
+                    result = result + digit * (10 ** (j - k))
+                if first == 'minus':
+                    result = result * (-1)
+                return self.resultRange(result)
+            else:
+                for k in range(0, j):
+                    digit = self.convertStr(digitList[k])
+                    result = result + digit * (10 ** (j - k - 1))
+                if first == 'minus':
+                    result = result * (-1)
+                return self.resultRange(result)
+
+    def checkDigit(self, character):
+        if (character == '0' or character ==  '1' or character == '2'
+            or character == '3' or character == '4' or character == '5'
+            or character == '6' or character == '7' or character == '8'
+            or character == '9'):
+            return True
+        elif character == '+':
+            return 'plus'
+        elif character == '-':
+            return 'minus'
+        else:
+            return False
+
+    def convertStr(self, character):
+        if character == '1':
+            return 1
+        elif character == '2':
+            return 2
+        elif character == '3':
+            return 3
+        elif character == '4':
+            return 4
+        elif character == '5':
+            return 5
+        elif character == '6':
+            return 6
+        elif character == '7':
+            return 7
+        elif character == '8':
+            return 8
+        elif character == '9':
+            return 9
+        else:
+            return 0
+
+    def resultRange(self, number):
+        smallest = -(2**31)
+        greatest = 2**31 - 1
+        if number < smallest:
+            return smallest
+        elif number > greatest:
+            return greatest
+        else:
+            return number
+```
+
+### Note
+1. Read the question carefully and consider all situations.
+
+2. return something can mean `True` in Python.
+
+May 11th, 2018
