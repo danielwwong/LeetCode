@@ -960,6 +960,6 @@ class Solution(object):
 ### Note
 1. Read the question carefully and consider all situations.
 
-2. return something can mean `True` in Python.
+2. Return something can mean `True` in Python.
 
 May 11th, 2018
