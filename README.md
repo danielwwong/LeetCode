@@ -18,6 +18,8 @@
 
 [9. Palindrome Number `#9`](#9-palindrome-number-9)
 
+[10. Container With Most Water `#11`](#10-container-with-most-water-11)
+
 ## 1. Two Sum `#1`
 ### Problem
 Given an array of integers, return indices of the two numbers such that they add up to a specific target.
@@ -1044,3 +1046,37 @@ digits = int(log10(x) + 1)
   - 6<sup>th</sup> digit: 123456 / 10<sup>5</sup> % 10 = 1
 
 May 12th, 2018
+
+## 10. Container With Most Water `#11`
+### Problem
+Given n non-negative integers a<sub>1</sub>, a<sub>2</sub>, ..., a<sub>n</sub>, where each represents a point at coordinate (i, a<sub>i</sub>). n vertical lines are drawn such that the two endpoints of line i is at (i, a<sub>i</sub>) and (i, 0). Find two lines, which together with x-axis forms a container, such that the container contains the most water.
+
+Note: You may not slant the container and n is at least 2.
+
+### Solution
+```python
+class Solution(object):
+    def maxArea(self, height):
+        """
+        :type height: List[int]
+        :rtype: int
+        """
+        result = 0
+        start = 0
+        end = len(height) - 1
+        while start != end:
+            result = max(result, min(height[start], height[end]) * (end - start))
+            if height[start] <= height[end]:
+                start += 1
+            else:
+                end -= 1
+        return result
+```
+
+### Note
+
+[Video 1](https://www.youtube.com/watch?v=IONgE6QZgGI)
+
+[Video 2](https://www.bilibili.com/video/av16708819)
+
+May 14th, 2018
