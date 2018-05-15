@@ -24,6 +24,8 @@
 
 [12. Roman to Integer `#13`](#12-roman-to-integer-13)
 
+[13. Longest Common Prefix `#14`](#13-longest-common-prefix-14)
+
 ## 1. Two Sum `#1`
 ### Problem
 Given an array of integers, return indices of the two numbers such that they add up to a specific target.
@@ -1327,5 +1329,67 @@ I can be placed before V (5) and X (10) to make 4 and 9.
 X can be placed before L (50) and C (100) to make 40 and 90.
 C can be placed before D (500) and M (1000) to make 400 and 900.
 ```
+
+May 15th, 2018
+
+## 13. Longest Common Prefix `#14`
+### Problem
+Write a function to find the longest common prefix string amongst an array of strings.
+
+If there is no common prefix, return an empty string "".
+
+**Note:**
+
+All given inputs are in lowercase letters a-z.
+
+### Example
+- Example 1:
+```
+Input: ["flower","flow","flight"]
+Output: "fl"
+```
+
+- Example 2:
+```
+Input: ["dog","racecar","car"]
+Output: ""
+Explanation: There is no common prefix among the input strings.
+```
+
+### Solution
+```python
+class Solution(object):
+    def longestCommonPrefix(self, strs):
+        """
+        :type strs: List[str]
+        :rtype: str
+        """
+        result = []
+        if len(strs) == 0:
+            return ''
+        elif len(strs) == 1:
+            return strs[0]
+        else:
+            for i in range(len(strs[0])):
+                character = strs[0][i]
+                count = 1
+                for j in range(1, len(strs)):
+                    try:
+                        if strs[j][i] == character:
+                            count += 1
+                        else:
+                            break
+                    except:
+                        break
+                if count == len(strs):
+                    result.append(character)
+                else:
+                    break
+            result_str = ''.join(result)
+            return result_str
+```
+
+### Note
+Use try-except to handle getting strings ends.
 
 May 15th, 2018
