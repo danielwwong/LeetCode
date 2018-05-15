@@ -20,6 +20,8 @@
 
 [10. Container With Most Water `#11`](#10-container-with-most-water-11)
 
+[11. Integer to Roman `#12`](#11-integer-to-roman-12)
+
 ## 1. Two Sum `#1`
 ### Problem
 Given an array of integers, return indices of the two numbers such that they add up to a specific target.
@@ -1078,5 +1080,139 @@ class Solution(object):
 [Video 1](https://www.youtube.com/watch?v=IONgE6QZgGI)
 
 [Video 2](https://www.bilibili.com/video/av16708819)
+
+May 14th, 2018
+
+## 11. Integer to Roman `#12`
+### Problem
+Roman numerals are represented by seven different symbols: I, V, X, L, C, D and M.
+
+```
+Symbol       Value
+I             1
+V             5
+X             10
+L             50
+C             100
+D             500
+M             1000
+```
+
+For example, two is written as II in Roman numeral, just two one's added together. Twelve is written as, XII, which is simply X + II. The number twenty seven is written as XXVII, which is XX + V + II.
+
+Roman numerals are usually written largest to smallest from left to right. However, the numeral for four is not IIII. Instead, the number four is written as IV. Because the one is before the five we subtract it making four. The same principle applies to the number nine, which is written as IX. There are six instances where subtraction is used:
+- I can be placed before V (5) and X (10) to make 4 and 9.
+- X can be placed before L (50) and C (100) to make 40 and 90.
+- C can be placed before D (500) and M (1000) to make 400 and 900.
+
+Given an integer, convert it to a roman numeral. Input is guaranteed to be within the range from 1 to 3999.
+
+### Example
+- Example 1:
+```
+Input: 3
+Output: "III"
+```
+
+- Example 2:
+```
+Input: 4
+Output: "IV"
+```
+
+- Example 3:
+```
+Input: 9
+Output: "IX"
+```
+
+- Example 4:
+```
+Input: 58
+Output: "LVIII"
+Explanation: C = 100, L = 50, XXX = 30 and III = 3.
+```
+
+- Example 5:
+```
+Input: 1994
+Output: "MCMXCIV"
+Explanation: M = 1000, CM = 900, XC = 90 and IV = 4.
+```
+
+### Solution
+```python
+from math import log10
+class Solution(object):
+    def intToRoman(self, num):
+        """
+        :type num: int
+        :rtype: str
+        """
+        digits = int(log10(num) + 1)
+        result = []
+        for i in range(digits):
+            number = num / (10 ** i) % 10
+            if i == 0:
+                if number > 0 and number < 4:
+                    for j in range(number):
+                        result.insert(0, 'I')
+                elif number == 4:
+                    result.insert(0, 'V')
+                    result.insert(0, 'I')
+                elif number >= 5 and number < 9:
+                    for j in range(number - 5):
+                        result.insert(0, 'I')
+                    result.insert(0, 'V')
+                elif number == 9:
+                    result.insert(0, 'X')
+                    result.insert(0, 'I')
+            if i == 1:
+                if number > 0 and number < 4:
+                    for j in range(number):
+                        result.insert(0, 'X')
+                elif number == 4:
+                    result.insert(0, 'L')
+                    result.insert(0, 'X')
+                elif number >= 5 and number < 9:
+                    for j in range(number - 5):
+                        result.insert(0, 'X')
+                    result.insert(0, 'L')
+                elif number == 9:
+                    result.insert(0, 'C')
+                    result.insert(0, 'X')
+            if i == 2:
+                if number > 0 and number < 4:
+                    for j in range(number):
+                        result.insert(0, 'C')
+                elif number == 4:
+                    result.insert(0, 'D')
+                    result.insert(0, 'C')
+                elif number >= 5 and number < 9:
+                    for j in range(number - 5):
+                        result.insert(0, 'C')
+                    result.insert(0, 'D')
+                elif number == 9:
+                    result.insert(0, 'M')
+                    result.insert(0, 'C')
+            if i == 3:
+                for j in range(number):
+                    result.insert(0, 'M')
+        result_str = ''.join(result)
+        return result_str
+```
+
+### Note
+1. Use `log10` function to calculate the digits of the number.
+```python
+from math import log10
+digits = int(log10(num) + 1)
+```
+
+2. Get the number in each digit.
+```python
+for i in range(len(num)):
+    number = num / (10 ** i) % 10
+```
 
 May 14th, 2018
