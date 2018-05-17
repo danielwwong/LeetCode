@@ -26,6 +26,8 @@
 
 [13. Longest Common Prefix `#14`](#13-longest-common-prefix-14)
 
+[14. 3Sum `#15`](#14-3sum-15)
+
 ## 1. Two Sum `#1`
 ### Problem
 Given an array of integers, return indices of the two numbers such that they add up to a specific target.
@@ -1393,3 +1395,143 @@ class Solution(object):
 Use try-except to handle getting strings ends.
 
 May 15th, 2018
+
+## 14. 3Sum `#15`
+### Problem
+Given an array nums of n integers, are there elements a, b, c in nums such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.
+
+**Note:**
+
+The solution set must not contain duplicate triplets.
+
+### Example
+```
+Given array nums = [-1, 0, 1, 2, -1, -4],
+
+A solution set is:
+[
+  [-1, 0, 1],
+  [-1, -1, 2]
+]
+```
+
+### Solution
+1. Exceeds Runtime Limit
+```python
+class Solution(object):
+    def threeSum(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        nums_sorted = self.mergesort(nums)
+        result_pairs = []
+        j = 0
+        for i in range(len(nums_sorted) - 2):
+            start = 1
+            end = 1
+            if nums_sorted[i] > 0:
+                break
+            else:
+                if i > 0:
+                    if nums_sorted[i] == nums_sorted[i - 1]:
+                        continue
+                while (i + start) < (len(nums_sorted) - end):
+                    if (nums_sorted[i + start] + nums_sorted[len(nums_sorted) - end]) > (nums_sorted[i] * (-1)):
+                        end += 1
+                    elif (nums_sorted[i + start] + nums_sorted[len(nums_sorted) - end]) < (nums_sorted[i] * (-1)):
+                        start += 1
+                    else:
+                        if j > 0:
+                            if nums_sorted[i + start] == result_pairs[j - 1][1] and nums_sorted[len(nums_sorted) - end] == result_pairs[j - 1][2]:
+                                end += 1
+                                start += 1
+                            else:
+                                result_pairs.append([])
+                                result_pairs[j].append(nums_sorted[i])
+                                result_pairs[j].append(nums_sorted[i + start])
+                                result_pairs[j].append(nums_sorted[len(nums_sorted) - end])
+                                j += 1
+                                end += 1
+                                start += 1
+                        else:
+                            result_pairs.append([])
+                            result_pairs[j].append(nums_sorted[i])
+                            result_pairs[j].append(nums_sorted[i + start])
+                            result_pairs[j].append(nums_sorted[len(nums_sorted) - end])
+                            j += 1
+                            end += 1
+                            start += 1
+        return result_pairs
+
+    def mergesort(self, seq):  
+        if len(seq)<= 1:  
+            return seq  
+        mid = int(len(seq) / 2)  
+        left = self.mergesort(seq[ : mid])  
+        right = self.mergesort(seq[mid : ])  
+        return self.merge(left, right)  
+
+    def merge(self, left,right):  
+        result = []  
+        i, j = 0, 0  
+        while i < len(left) and j < len(right):  
+            if left[i] <= right[j]:  
+                result.append(left[i])  
+                i += 1  
+            else:  
+                result.append(right[j])  
+                j += 1  
+        result += left[i : ]  
+        result += right[j : ]  
+        return result
+```
+
+2. Optimized Solution
+```python
+class Solution(object):
+    def threeSum(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        nums.sort()
+        result_pairs = []
+        j = 0
+        for i in range(len(nums) - 2):
+            start = 1
+            end = 1
+            if nums[i] > 0:
+                break
+            elif i > 0 and nums[i] == nums[i - 1]:
+                continue
+            else:
+                while (i + start) < (len(nums) - end):
+                    if (nums[i + start] + nums[len(nums) - end]) > (nums[i] * (-1)):
+                        end += 1
+                    elif (nums[i + start] + nums[len(nums) - end]) < (nums[i] * (-1)):
+                        start += 1
+                    else:
+                        if j > 0:
+                            if nums[i + start] == result_pairs[j - 1][1] and nums[len(nums) - end] == result_pairs[j - 1][2]:
+                                end += 1
+                                start += 1
+                                continue
+                        result_pairs.append([])
+                        result_pairs[j].append(nums[i])
+                        result_pairs[j].append(nums[i + start])
+                        result_pairs[j].append(nums[len(nums) - end])
+                        j += 1
+                        end += 1
+                        start += 1
+        return result_pairs
+```
+
+### Note
+Use Python's `sort()` function to sort the list can be faster.
+
+![img](img/12.png)
+
+Python's `sort()` uses Timsort, it is better than merge sort in real-world data.
+
+May 16th, 2018
