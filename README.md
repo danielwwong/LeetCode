@@ -1595,6 +1595,6 @@ class Solution(object):
 ```
 
 ### Note
-Similar to [`#15`](#14-3sum-15)
+Similar to [3Sum `#15`](#14-3sum-15)
 
 May 16th, 2018
