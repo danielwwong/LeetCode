@@ -28,6 +28,8 @@
 
 [14. 3Sum `#15`](#14-3sum-15)
 
+[15. 3Sum Closest `#16`](#15-3sum-closest-16)
+
 ## 1. Two Sum `#1`
 ### Problem
 Given an array of integers, return indices of the two numbers such that they add up to a specific target.
@@ -1533,5 +1535,66 @@ Use Python's `sort()` function to sort the list can be faster.
 ![img](img/12.png)
 
 Python's `sort()` uses Timsort, it is better than merge sort in real-world data.
+
+May 16th, 2018
+
+## 15. 3Sum Closest `#16`
+### Problem
+Given an array nums of n integers and an integer target, find three integers in nums such that the sum is closest to target. Return the sum of the three integers. You may assume that each input would have exactly one solution.
+
+### Example
+```
+Given array nums = [-1, 2, 1, -4], and target = 1.
+
+The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).
+```
+
+### Solution
+```python
+class Solution(object):
+    def threeSumClosest(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: int
+        """
+        nums.sort()
+        for i in range(len(nums) - 2):
+            start = 1
+            end = 1
+            while i + start < len(nums) - end:
+                if (nums[i + start] + nums[len(nums) - end]) < (target - nums[i]):
+                    if i == 0 and start == 1 and end == 1:
+                        record_i = 0
+                        record_start = start
+                        record_end = end
+                        record_gap = abs(target - (nums[i] + nums[i + start] + nums[len(nums) - end]))
+                    else:
+                        if abs((target - (nums[i] + nums[i + start] + nums[len(nums) - end]))) < record_gap:
+                            record_i = i
+                            record_start = start
+                            record_end = end
+                            record_gap = abs((target - (nums[i] + nums[i + start] + nums[len(nums) - end])))
+                    start += 1
+                elif (nums[i + start] + nums[len(nums) - end]) > (target - nums[i]):
+                    if i == 0 and start == 1 and end == 1:
+                        record_i = 0
+                        record_start = start
+                        record_end = end
+                        record_gap = abs(target - (nums[i] + nums[i + start] + nums[len(nums) - end]))
+                    else:
+                        if abs((target - (nums[i] + nums[i + start] + nums[len(nums) - end]))) < record_gap:
+                            record_i = i
+                            record_start = start
+                            record_end = end
+                            record_gap = abs((target - (nums[i] + nums[i + start] + nums[len(nums) - end])))
+                    end += 1
+                else:
+                    return target
+        return nums[record_i] + nums[record_i + record_start] + nums[len(nums) - record_end]
+```
+
+### Note
+Similar to [`#15`](#14-3sum-15)
 
 May 16th, 2018
