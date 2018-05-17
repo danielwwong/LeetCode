@@ -30,6 +30,8 @@
 
 [15. 3Sum Closest `#16`](#15-3sum-closest-16)
 
+[16. Letter Combinations of a Phone Number `#17`](#16-letter-combinations-of-a-phone-number-17)
+
 ## 1. Two Sum `#1`
 ### Problem
 Given an array of integers, return indices of the two numbers such that they add up to a specific target.
@@ -1598,3 +1600,60 @@ class Solution(object):
 Similar to [3Sum `#15`](#14-3sum-15)
 
 May 16th, 2018
+
+## 16. Letter Combinations of a Phone Number `#17`
+### Problem
+Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent.
+
+A mapping of digit to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.
+
+![img](img/13.png)
+
+**Note:**
+
+Although the above answer is in lexicographical order, your answer could be in any order you want.
+
+### Example
+```
+Input: "23"
+Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
+```
+
+### Solution
+```python
+class Solution(object):
+    def letterCombinations(self, digits):
+        """
+        :type digits: str
+        :rtype: List[str]
+        """
+        digit_map = {'2': ['a', 'b', 'c'],
+              '3': ['d', 'e', 'f'],
+              '4': ['g', 'h', 'i'],
+              '5': ['j', 'k', 'l'],
+              '6': ['m', 'n', 'o'],
+              '7': ['p', 'q', 'r', 's'],
+              '8': ['t', 'u', 'v'],
+              '9': ['w', 'x', 'y', 'z']}
+        result = []
+        count = 1
+        length = len(digits)
+        if length == 0:
+            return []
+        for i in range(len(digit_map[digits[0]])):
+            self.dfs(count, length, result, '', str(digit_map[digits[0]][i]), digit_map, digits)
+        return result
+
+    def dfs(self, count, length, result, str_result, character, digit_map, digits):
+        if count == length:
+            result.append(str_result + character)
+        else:
+            str_result = str_result + character
+            for i in range(len(digit_map[digits[count]])):
+                self.dfs(count + 1, length, result, str_result, str(digit_map[digits[count]][i]), digit_map, digits)
+```
+
+### Note
+Use DFS. Need to be familiar with DFS.
+
+May 17th, 2018
