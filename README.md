@@ -32,6 +32,8 @@
 
 [16. Letter Combinations of a Phone Number `#17`](#16-letter-combinations-of-a-phone-number-17)
 
+[17. 4Sum `#18`](#17-4sum-18)
+
 ## 1. Two Sum `#1`
 ### Problem
 Given an array of integers, return indices of the two numbers such that they add up to a specific target.
@@ -1655,5 +1657,86 @@ class Solution(object):
 
 ### Note
 Use DFS. Need to be familiar with DFS.
+
+May 17th, 2018
+
+## 17. 4Sum `#18`
+### Problem
+Given an array nums of n integers and an integer target, are there elements a, b, c, and d in nums such that a + b + c + d = target? Find all unique quadruplets in the array which gives the sum of target.
+
+**Note:**
+
+The solution set must not contain duplicate quadruplets.
+
+### Example
+```
+Given array nums = [1, 0, -1, 0, -2, 2], and target = 0.
+
+A solution set is:
+[
+  [-1,  0, 0, 1],
+  [-2, -1, 1, 2],
+  [-2,  0, 0, 2]
+]
+```
+
+### Solution
+```python
+class Solution(object):
+    def fourSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
+        nums.sort()
+        result = []
+        count = 0
+        num_length = len(nums)
+        if num_length < 4:
+            return result
+        for i in range(num_length - 3):
+            if i > 0:
+                if nums[i] == nums[i - 1]:
+                    continue
+            for j in range(i + 1, num_length - 2):
+                if j > i + 1:
+                    if nums[j] == nums[j - 1]:
+                        continue
+                start = 1
+                end = 1
+                target_sub = target - nums[i] - nums[j]
+                while j + start < num_length - end:
+                    if (nums[j + start] + nums[num_length - end]) < (target_sub):
+                        start += 1
+                    elif (nums[j + start] + nums[num_length - end]) > (target_sub):
+                        end += 1
+                    else:
+                        if count > 0:
+                            if nums[j] == result[count - 1][1] and nums[j + start] == result[count - 1][2] and nums[num_length - end] == result[count - 1][3]:
+                                start += 1
+                                end += 1
+                                continue
+                        result.append([])
+                        result[count].append(nums[i])
+                        result[count].append(nums[j])
+                        result[count].append(nums[j + start])
+                        result[count].append(nums[num_length - end])
+                        start += 1
+                        end += 1
+                        count += 1
+        return result
+```
+
+### Note
+1. Similar to [3Sum `#15`](#14-3sum-15)
+2. Skip the duplicate quadruplets. If `a + b + c + d = target`, we can know abcd are the same if bcd and target are the same. See the while loop's else statement.
+3. Remember to add<br>
+```python
+start += 1
+end += 1
+```
+<br>
+under the while loop's else statement. Or it will not go out of the while loop.
 
 May 17th, 2018
