@@ -1737,6 +1737,6 @@ start += 1
 end += 1
 ```
 
-&ensp;&ensp;under the while loop's else statement. Or it will not go out of the while loop.
+&ensp;&ensp;&ensp;&ensp;under the while loop's else statement. Or it will not go out of the while loop.
 
 May 17th, 2018
