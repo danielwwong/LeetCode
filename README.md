@@ -36,6 +36,8 @@
 
 [18. Remove Nth Node From End of List `#19`](#18-remove-nth-node-from-end-of-list-19)
 
+[19. Valid Parentheses `#20`](#19-valid-parentheses-20)
+
 ## 1. Two Sum `#1`
 ### Problem
 Given an array of integers, return indices of the two numbers such that they add up to a specific target.
@@ -1800,5 +1802,87 @@ class Solution(object):
 Better Solution: [One Pass](https://leetcode.com/problems/remove-nth-node-from-end-of-list/solution/)
 
 My solution used lists. The other solution used only linked list and only one pass.
+
+May 18th, 2018
+
+## 19. Valid Parentheses `#20`
+### Problem
+Given a string containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+
+An input string is valid if:
+
+Open brackets must be closed by the same type of brackets.
+Open brackets must be closed in the correct order.
+Note that an empty string is also considered valid.
+
+### Example
+- Example 1:
+```
+Input: "()"
+Output: true
+```
+
+- Example 2:
+```
+Input: "()[]{}"
+Output: true
+```
+
+- Example 3:
+```
+Input: "(]"
+Output: false
+```
+
+- Example 4:
+```
+Input: "([)]"
+Output: false
+```
+
+- Example 5:
+```
+Input: "{[]}"
+Output: true
+```
+
+### Solution
+```python
+class Solution(object):
+    def isValid(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        if len(s) == 0:
+            return True
+        elif len(s) == 1:
+            return False
+        left_dict = {'(': 1,
+                    '{': 1,
+                    '[': 1}
+        right_dict = {')': '(',
+                     '}': '{',
+                     ']': '['}
+        left = []
+        for i in range(len(s)):
+            if left_dict.get(s[i]):
+                left.append(s[i])
+            else:
+                if len(left) == 0:
+                    return False
+                if right_dict[s[i]] == left[len(left) - 1]:
+                    left.pop()
+                else:
+                    return False
+        if len(left) == 0:
+            return True
+        else:
+            return False
+```
+
+### Note
+1. Use stack. Last in first out.
+2. Remember to consider all situations. For instance, when the stack is empty. `input: "){"`
 
 May 18th, 2018
