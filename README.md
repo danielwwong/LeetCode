@@ -1730,7 +1730,7 @@ class Solution(object):
 
 ### Note
 1. Similar to [3Sum `#15`](#14-3sum-15)
-2. Skip the duplicate quadruplets. If `a + b + c + d = target`, we can know abcd are the same if bcd and target are the same. See the while loop's else statement.
+2. Skip the duplicate quadruplets. If `a + b + c + d = target`, we can know `abcd` are the same if `bcd` and `target` are the same. See the while loop's else statement.
 3. Remember to add
 ```python
 start += 1
