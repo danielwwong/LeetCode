@@ -34,6 +34,8 @@
 
 [17. 4Sum `#18`](#17-4sum-18)
 
+[18. Remove Nth Node From End of List `#19`](#18-remove-nth-node-from-end-of-list-19)
+
 ## 1. Two Sum `#1`
 ### Problem
 Given an array of integers, return indices of the two numbers such that they add up to a specific target.
@@ -1740,3 +1742,63 @@ end += 1
 &ensp;&ensp;&ensp;&ensp;under the while loop's else statement. Or it will not go out of the while loop.
 
 May 17th, 2018
+
+## 18. Remove Nth Node From End of List `#19`
+### Problem
+Given a linked list, remove the n-th node from the end of list and return its head.
+
+**Note:**
+
+Given n will always be valid.
+
+**Follow up:**
+
+Could you do this in one pass?
+
+### Example
+```
+Given linked list: 1->2->3->4->5, and n = 2.
+
+After removing the second node from the end, the linked list becomes 1->2->3->5.
+```
+
+### Solution
+```python
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution(object):
+    def removeNthFromEnd(self, head, n):
+        """
+        :type head: ListNode
+        :type n: int
+        :rtype: ListNode
+        """
+        values = []
+        if head.next == None:
+            values.append(head.val)
+        else:
+            while head.next != None:
+                values.append(head.val)
+                head = head.next
+            values.append(head.val)
+        del values[len(values) - n]
+        if len(values) == 0:
+            return None
+        new_head = ListNode(values[0])
+        append = new_head
+        for i in range(1, len(values)):
+            append.next = ListNode(values[i])
+            append = append.next
+        return new_head
+```
+
+### Note
+Better Solution: [One Pass](https://leetcode.com/problems/remove-nth-node-from-end-of-list/solution/)
+
+My solution used lists. The other solution used only linked list and only one pass.
+
+May 18th, 2018
