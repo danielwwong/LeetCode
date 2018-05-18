@@ -38,6 +38,8 @@
 
 [19. Valid Parentheses `#20`](#19-valid-parentheses-20)
 
+[20. Merge Two Sorted Lists `#21`](#20-merge-two-sorted-lists-21)
+
 ## 1. Two Sum `#1`
 ### Problem
 Given an array of integers, return indices of the two numbers such that they add up to a specific target.
@@ -1884,5 +1886,115 @@ class Solution(object):
 ### Note
 1. Use stack. Last in first out.
 2. Remember to consider all situations. For instance, when the stack is empty. `input: "){"`
+
+May 18th, 2018
+
+## 20. Merge Two Sorted Lists `#21`
+### Problem
+Merge two sorted linked lists and return it as a new list. The new list should be made by splicing together the nodes of the first two lists.
+
+### Example
+```
+Input: 1->2->4, 1->3->4
+Output: 1->1->2->3->4->4
+```
+
+### Solution
+```python
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution(object):
+    def mergeTwoLists(self, l1, l2):
+        """
+        :type l1: ListNode
+        :type l2: ListNode
+        :rtype: ListNode
+        """
+        resultHead = ListNode(0)
+        result = resultHead
+        if l1 == None:
+            return l2
+        if l2 == None:
+            return l1
+        while l1.next != None and l2.next != None:
+            if l1.val <= l2.val:
+                result.next = ListNode(l1.val)
+                result = result.next
+                l1 = l1.next
+            else:
+                result.next = ListNode(l2.val)
+                result = result.next
+                l2 = l2.next
+        if l1.next == None:
+            if l2.next == None:
+                if l1.val <= l2.val:
+                    result.next = ListNode(l1.val)
+                    result = result.next
+                    result.next = ListNode(l2.val)
+                else:
+                    result.next = ListNode(l2.val)
+                    result = result.next
+                    result.next = ListNode(l1.val)
+            else:
+                if l1.val <= l2.val:
+                    result.next = ListNode(l1.val)
+                    result = result.next
+                    result.next = l2
+                else:
+                    flag = 0
+                    while l2.next != None and flag == 0:
+                        if l1.val <= l2.val:
+                            result.next = ListNode(l1.val)
+                            result = result.next
+                            result.next = l2
+                            flag = 1
+                        else:
+                            result.next = ListNode(l2.val)
+                            result = result.next
+                            l2 = l2.next
+                    if flag == 0:
+                        if l1.val <= l2.val:
+                            result.next = ListNode(l1.val)
+                            result = result.next
+                            result.next = ListNode(l2.val)
+                        else:
+                            result.next = ListNode(l2.val)
+                            result = result.next
+                            result.next = ListNode(l1.val)
+        elif l2.next == None:
+            if l1.val <= l2.val:
+                flag = 0
+                while l1.next != None and flag == 0:
+                    if l1.val < l2.val:
+                        result.next = ListNode(l1.val)
+                        result = result.next
+                        l1 = l1.next
+                    else:
+                        result.next = ListNode(l2.val)
+                        result = result.next
+                        result.next = l1
+                        flag = 1
+                if flag == 0:
+                    if l1.val <= l2.val:
+                        result.next = ListNode(l1.val)
+                        result = result.next
+                        result.next = ListNode(l2.val)
+                    else:
+                        result.next = ListNode(l2.val)
+                        result = result.next
+                        result.next = ListNode(l1.val)
+            else:
+                result.next = ListNode(l2.val)
+                result = result.next
+                result.next = l1
+        return resultHead.next
+```
+
+### Note
+Consider all corner situations.
 
 May 18th, 2018
