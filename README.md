@@ -1731,12 +1731,12 @@ class Solution(object):
 ### Note
 1. Similar to [3Sum `#15`](#14-3sum-15)
 2. Skip the duplicate quadruplets. If `a + b + c + d = target`, we can know abcd are the same if bcd and target are the same. See the while loop's else statement.
-3. Remember to add<br>
+3. Remember to add
 ```python
 start += 1
 end += 1
 ```
-<br>
-under the while loop's else statement. Or it will not go out of the while loop.
+
+&ensp;&ensp;under the while loop's else statement. Or it will not go out of the while loop.
 
 May 17th, 2018
