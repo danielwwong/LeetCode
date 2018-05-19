@@ -40,6 +40,8 @@
 
 [20. Merge Two Sorted Lists `#21`](#20-merge-two-sorted-lists-21)
 
+[21. Generate Parentheses `#22`](#21-generate-parentheses-22)
+
 ## 1. Two Sum `#1`
 ### Problem
 Given an array of integers, return indices of the two numbers such that they add up to a specific target.
@@ -1998,3 +2000,62 @@ class Solution(object):
 Consider all corner situations.
 
 May 18th, 2018
+
+## 21. Generate Parentheses `#22`
+### Problem
+Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
+
+### Example
+For example, given n = 3, a solution set is:
+```
+[
+  "((()))",
+  "(()())",
+  "(())()",
+  "()(())",
+  "()()()"
+]
+```
+
+### Solution
+```python
+class Solution(object):
+    def generateParenthesis(self, n):
+        """
+        :type n: int
+        :rtype: List[str]
+        """
+        result = []
+        if n == 0:
+            result.append("")
+            return result
+        self.dfs(n * 2 - 1, result, '', '(', 0, n)
+        return result
+
+    def dfs(self, depth, result, temp_str, bracket, left, pairs):
+        if depth == 0:
+            if left - 1 == 0 and bracket == ')':
+                temp_str += ')'
+                result.append(temp_str)
+        if bracket == '(':
+            if pairs > 0:
+                left += 1
+                pairs -= 1
+                temp_str += '('
+                self.dfs(depth - 1, result, temp_str, '(', left, pairs)
+                self.dfs(depth - 1, result, temp_str, ')', left, pairs)
+        if bracket == ')':
+            if left > 0:
+                left -= 1
+                temp_str += ')'
+                self.dfs(depth - 1, result, temp_str, '(', left, pairs)
+                self.dfs(depth - 1, result, temp_str, ')', left, pairs)
+```
+
+### Note
+1. ![img](img/14.png)
+2. Use DFS to traverse the tree.
+3. The first must be `"("` and the last must be `")"`.
+4. During the traversing process, the `")"` numbers must <= `"("`.
+
+May 19th, 2018
