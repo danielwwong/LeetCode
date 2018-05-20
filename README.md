@@ -42,6 +42,8 @@
 
 [21. Generate Parentheses `#22`](#21-generate-parentheses-22)
 
+[22. Merge k Sorted Lists `#23`](#22-merge-k-sorted-lists-23)
+
 ## 1. Two Sum `#1`
 ### Problem
 Given an array of integers, return indices of the two numbers such that they add up to a specific target.
@@ -2057,5 +2059,83 @@ class Solution(object):
 2. Use DFS to traverse the tree.
 3. The first must be `"("` and the last must be `")"`.
 4. During the traversing process, the `")"` numbers must <= `"("`.
+
+May 19th, 2018
+
+## 22. Merge k Sorted Lists `#23`
+### Problem
+Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.
+
+### Example
+```
+Input:
+[
+  1->4->5,
+  1->3->4,
+  2->6
+]
+Output: 1->1->2->3->4->4->5->6
+```
+
+### Solution
+Exceeds Runtime Limit
+```python
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution(object):
+    def mergeKLists(self, lists):
+        """
+        :type lists: List[ListNode]
+        :rtype: ListNode
+        """
+        if len(lists) == 0:
+            return []
+        if len(lists) == 1:
+            return lists[0]
+        result = ListNode(0)
+        dummyHead = result
+        temp = []
+        count = 0
+        min_index = -1
+        for i in range(len(lists)):
+            if lists[i] != None:
+                temp.append(lists[i].val)
+            else:
+                lists[i] = ListNode('')
+                temp.append(lists[i].val)
+        if isinstance(min(temp), int):
+            result.next = ListNode(min(temp))
+            result = result.next
+            min_index = temp.index(min(temp))
+            lists[min_index] = lists[min_index].next
+            if lists[min_index] == None:
+                temp.insert(min_index, '')
+                count += 1
+            temp.remove(min(temp))
+        else:
+            return []
+        while count < len(lists):
+            if lists[min_index] != None:
+                temp.insert(min_index, lists[min_index].val)
+            if isinstance(min(temp), int):
+                result.next = ListNode(min(temp))
+                result = result.next
+                min_index = temp.index(min(temp))
+                lists[min_index] = lists[min_index].next
+                if lists[temp.index(min(temp))] == None:
+                    temp.insert(min_index, '')
+                    count += 1
+                temp.remove(min(temp))
+            else:
+                break
+        return dummyHead.next
+```
+
+### Note
+`0` in Python is equal `False`, remember to use `isinstance(object, int)` to check if it's `0` or other numbers.
 
 May 19th, 2018
