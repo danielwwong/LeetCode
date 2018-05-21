@@ -42,7 +42,7 @@
 
 [21. Generate Parentheses `#22`](#21-generate-parentheses-22)
 
-[22. Merge k Sorted Lists `#23`](#22-merge-k-sorted-lists-23)
+[22. Merge k Sorted Lists `#23`](#22-merge-k-sorted-lists-23) ![img](img/red.png) `TLE`
 
 ## 1. Two Sum `#1`
 ### Problem
