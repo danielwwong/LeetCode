@@ -46,6 +46,8 @@
 
 [23. Swap Nodes in Pairs `#24`](#23-swap-nodes-in-pairs-24)
 
+[24. Reverse Nodes in k-Group `#25`](#24-reverse-nodes-in-k-group-25)
+
 ## 1. Two Sum `#1`
 ### Problem
 Given an array of integers, return indices of the two numbers such that they add up to a specific target.
@@ -2192,5 +2194,91 @@ class Solution(object):
 
 ### Note
 Consider the linked list operations thoroughly.
+
+May 21st, 2018
+
+## 24. Reverse Nodes in k-Group `#25`
+### Problem
+Given a linked list, reverse the nodes of a linked list k at a time and return its modified list.
+
+k is a positive integer and is less than or equal to the length of the linked list. If the number of nodes is not a multiple of k then left-out nodes in the end should remain as it is.
+
+**Note:**
+
+- Only constant extra memory is allowed.
+- You may not alter the values in the list's nodes, only nodes itself may be changed.
+
+### Example
+```
+Given this linked list: 1->2->3->4->5
+
+For k = 2, you should return: 2->1->4->3->5
+
+For k = 3, you should return: 3->2->1->4->5
+```
+
+### Solution
+```python
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution(object):
+    def reverseKGroup(self, head, k):
+        """
+        :type head: ListNode
+        :type k: int
+        :rtype: ListNode
+        """
+        pointer_head = head
+        pointer_last = pointer_head
+        current = None
+        if head == None:
+            return []
+        if k == 1:
+            return head
+        while pointer_head != None:
+            nodes = []
+            i = 0
+            while i < k:
+                if pointer_last != None:
+                    nodes.append(pointer_last)
+                    pointer_last = pointer_last.next
+                    i += 1
+                else:
+                    break
+            if i == k:
+                if current != None:
+                    current.next = nodes[len(nodes) - 1]
+                else:
+                    true_head = nodes[len(nodes) - 1]
+                pointer_head.next = pointer_last
+                current = pointer_head
+                pointer_head = pointer_head.next
+                for j in range(len(nodes) - 1):
+                    nodes[len(nodes) - 1 - j].next = nodes[len(nodes) - 2 - j]
+            else:
+                if current == None:
+                    return head
+                break
+        return true_head
+```
+
+### Note
+1. Similar to [Swap Nodes in Pairs `#24`](#23-swap-nodes-in-pairs-24)
+2. For instance, k = 4<br>
+First round of less than k,<br>
+![img](img/15.png)<br>
+![img](img/16.png)<br>
+![img](img/17.png)<br>
+![img](img/18.png)<br>
+![img](img/19.png)<br>
+Then,<br>
+![img](img/20.png)<br>
+Repeat the first round,<br>
+![img](img/21.png)<br>
+...
 
 May 21st, 2018
