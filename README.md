@@ -2342,9 +2342,7 @@ class Solution(object):
         i = 1
         temp = nums[0]
         for j in range(1, len(nums)):
-            if nums[j] == temp:
-                continue
-            else:
+            if nums[j] != temp:
                 temp = nums[j]
                 nums[i] = temp
                 i += 1
