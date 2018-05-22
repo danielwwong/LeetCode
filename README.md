@@ -52,6 +52,8 @@
 
 [26. Remove Element `#27`](#26-remove-element-27)
 
+[27. Implement strStr() `#28`](#27-implement-strstr-28)
+
 ## 1. Two Sum `#1`
 ### Problem
 Given an array of integers, return indices of the two numbers such that they add up to a specific target.
@@ -2425,5 +2427,63 @@ class Solution(object):
 
 ### Note
 Similar to [Remove Duplicates from Sorted Array `#26`](#25-remove-duplicates-from-sorted-array-26)
+
+May 21st, 2018
+
+## 27. Implement strStr() `#28`
+### Problem
+Implement [strStr()](http://www.cplusplus.com/reference/cstring/strstr/).
+
+Return the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.
+
+**Clarification:**
+
+What should we return when needle is an empty string? This is a great question to ask during an interview.
+
+For the purpose of this problem, we will return 0 when needle is an empty string. This is consistent to C's [strstr()](http://www.cplusplus.com/reference/cstring/strstr/) and Java's [indexOf()](https://docs.oracle.com/javase/7/docs/api/java/lang/String.html#indexOf\(java.lang.String\)).
+
+### Example
+- Example 1:
+```
+Input: haystack = "hello", needle = "ll"
+Output: 2
+```
+
+- Example 2:
+```
+Input: haystack = "aaaaa", needle = "bba"
+Output: -1
+```
+
+### Solution
+```python
+class Solution(object):
+    def strStr(self, haystack, needle):
+        """
+        :type haystack: str
+        :type needle: str
+        :rtype: int
+        """
+        if len(needle) == 0:
+            return 0
+        if len(needle) > len(haystack):
+            return -1
+        for i in range(len(haystack) - len(needle) + 1):
+            place = None
+            if haystack[i] == needle[0]:
+                for j in range(1, len(needle)):
+                    if haystack[i + j] != needle[j]:
+                        place = 'break'
+                        break
+                if place == None:
+                    place = i
+                    break
+        if isinstance(place, int):
+            return place
+        return -1
+```
+
+### Note
+Remember to analyze where to put `place` flag. Or it will have wrong output.
 
 May 21st, 2018
