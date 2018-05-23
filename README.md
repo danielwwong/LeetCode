@@ -54,6 +54,8 @@
 
 [27. Implement strStr() `#28`](#27-implement-strstr-28)
 
+[28. Divide Two Integers `#29`](#28-divide-two-integers-29)
+
 ## 1. Two Sum `#1`
 ### Problem
 Given an array of integers, return indices of the two numbers such that they add up to a specific target.
@@ -2487,3 +2489,141 @@ class Solution(object):
 Remember to analyze where to put `place` flag. Or it will have wrong output.
 
 May 21st, 2018
+
+## 28. Divide Two Integers `#29`
+### Problem
+Given two integers dividend and divisor, divide two integers without using multiplication, division and mod operator.
+
+Return the quotient after dividing dividend by divisor.
+
+The integer division should truncate toward zero.
+
+**Note:**
+
+- Both dividend and divisor will be 32-bit signed integers.
+- The divisor will never be 0.
+- Assume we are dealing with an environment which could only store integers within the 32-bit signed integer range: [−2<sup>31</sup>,  2<sup>31</sup> − 1]. For the purpose of this problem, assume that your function returns 2<sup>31</sup> − 1 when the division result overflows.
+
+### Example
+- Example 1:
+```
+Input: dividend = 10, divisor = 3
+Output: 3
+```
+
+- Example 2:
+```
+Input: dividend = 7, divisor = -3
+Output: -2
+```
+
+### Solution
+```python
+class Solution(object):
+    def divide(self, dividend, divisor):
+        """
+        :type dividend: int
+        :type divisor: int
+        :rtype: int
+        """
+        max_overflow = (2 ** 31) - 1
+        min_overflow = -(2 ** 31)
+        if dividend == 0:
+            return 0
+        negative_flag = 0
+        if dividend < 0 and divisor < 0:
+            dividend = 0 - dividend
+            divisor = 0 - divisor
+        elif (dividend > 0 and divisor < 0) or (dividend < 0 and divisor > 0):
+            negative_flag = 1
+            if dividend > 0:
+                divisor = 0 - divisor
+            elif divisor > 0:
+                dividend = 0 - dividend
+        if dividend < divisor:
+            return 0
+        multiplication = divisor
+        quotient = 0
+        count = 0
+        while dividend > divisor:
+            dividend -= multiplication
+            count += 1
+            quotient += count
+            multiplication += divisor
+        if dividend == divisor:
+            if negative_flag == 0:
+                if quotient + 1 <= max_overflow:
+                    return quotient + 1
+                else:
+                    return max_overflow
+            else:
+                if 0 - quotient - 1 >= min_overflow:
+                    return 0 - quotient - 1
+                else:
+                    return min_overflow
+        if dividend > 0:
+            if negative_flag == 0:
+                if quotient <= max_overflow:
+                    return quotient
+                else:
+                    return max_overflow
+            else:
+                if 0 - quotient >= min_overflow:
+                    return 0 - quotient
+                else:
+                    return min_overflow
+        else:
+            multiplication -= divisor
+            dividend += multiplication
+            quotient -= count
+            while dividend > divisor:
+                dividend -= divisor
+                quotient += 1
+            if dividend == divisor:
+                if negative_flag == 0:
+                    if quotient + 1 <= max_overflow:
+                        return quotient + 1
+                    else:
+                        return max_overflow
+                else:
+                    if 0 - quotient - 1 >= min_overflow:
+                        return 0 - quotient - 1
+                    else:
+                        return min_overflow
+            else:
+                if negative_flag == 0:
+                    if quotient <= max_overflow:
+                        return quotient
+                    else:
+                        return max_overflow
+                else:
+                    if 0 - quotient >= min_overflow:
+                        return 0 - quotient
+                    else:
+                        return min_overflow
+```
+
+### Note
+```
+Input: dividend = 9, divisor = 2
+9 - 2 = 7
+quotient = 1
+
+7 - (2 + 2) = 3
+quotient = 1 + 2 = 3
+
+3 - (4 + 2) = -3
+quotient = 1 + 2 + 3 = 6
+
+-3 < 0, rollback one step
+-3 + 6 = 3
+quotient - 3 = 3
+
+3 - 2 = 1
+quotient = 3 + 1 = 4
+
+1 < 2
+return quotient = 4
+```
+
+May 22nd, 2018
