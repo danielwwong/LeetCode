@@ -56,6 +56,8 @@
 
 [28. Divide Two Integers `#29`](#28-divide-two-integers-29)
 
+[29. Substring with Concatenation of All Words `#30`](#29-substring-with-concatenation-of-all-words-30)
+
 ## 1. Two Sum `#1`
 ### Problem
 Given an array of integers, return indices of the two numbers such that they add up to a specific target.
@@ -2627,3 +2629,74 @@ return quotient = 4
 ```
 
 May 22nd, 2018
+
+## 29. Substring with Concatenation of All Words `#30`
+### Problem
+You are given a string, s, and a list of words, words, that are all of the same length. Find all starting indices of substring(s) in s that is a concatenation of each word in words exactly once and without any intervening characters.
+
+### Example
+- Example 1:
+```
+Input:
+  s = "barfoothefoobarman",
+  words = ["foo","bar"]
+Output: [0,9]
+Explanation: Substrings starting at index 0 and 9 are "barfoor" and "foobar" respectively.
+The output order does not matter, returning [9,0] is fine too.
+```
+
+- Example 2:
+```
+Input:
+  s = "wordgoodstudentgoodword",
+  words = ["word","student"]
+Output: []
+```
+
+### Solution
+```python
+class Solution(object):
+    def findSubstring(self, s, words):
+        """
+        :type s: str
+        :type words: List[str]
+        :rtype: List[int]
+        """
+        if len(words) == 0:
+            return []
+        words_dict = {}
+        words_first = {}
+        result = []
+        for i in range(len(words)):
+            if words_dict.get(words[i]) == None:
+                words_dict[words[i]] = 1
+            else:
+                words_dict[words[i]] += 1
+            words_first[words[i][0]] = 1
+        length = len(words[0])
+        if len(s) < len(words) * length:
+            return []
+        for i in range(len(s) - len(words) * length + 1):
+            dynamic_words_dict = words_dict.copy()
+            if words_first.get(s[i]) != None:
+                flag = 0
+                for j in range(len(words)):
+                    temp = ''
+                    for k in range(length):
+                        temp += s[i + j * length + k]
+                    if dynamic_words_dict.get(temp) > 0:
+                        dynamic_words_dict[temp] -= 1
+                    elif dynamic_words_dict.get(temp) == 0 or dynamic_words_dict.get(temp) == None:
+                        flag = 1
+                        break
+                if flag == 0:
+                    result.append(i)
+        return result
+```
+
+### Note
+1. All words are of the same length.
+2. Use Sliding Window.
+3. Copy a dict should use `copy_dict = dict.copy()`.
+
+May 24th, 2018
