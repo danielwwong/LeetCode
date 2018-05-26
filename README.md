@@ -58,6 +58,8 @@
 
 [29. Substring with Concatenation of All Words `#30`](#29-substring-with-concatenation-of-all-words-30)
 
+[30. Next Permutation `#31`](#30-next-permutation-31)
+
 ## 1. Two Sum `#1`
 ### Problem
 Given an array of integers, return indices of the two numbers such that they add up to a specific target.
@@ -2700,3 +2702,100 @@ class Solution(object):
 3. Copy a dict should use `copy_dict = dict.copy()`.
 
 May 24th, 2018
+
+## 30. Next Permutation `#31`
+### Problem
+Implement next permutation, which rearranges numbers into the lexicographically next greater permutation of numbers.
+
+If such arrangement is not possible, it must rearrange it as the lowest possible order (ie, sorted in ascending order).
+
+The replacement must be in-place and use only constant extra memory.
+
+Here are some examples. Inputs are in the left-hand column and its corresponding outputs are in the right-hand column.
+
+### Example
+```
+1,2,3 → 1,3,2
+3,2,1 → 1,2,3
+1,1,5 → 1,5,1
+```
+
+### Solution
+```python
+class Solution(object):
+    def nextPermutation(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: void Do not return anything, modify nums in-place instead.
+        """
+        if len(nums) >= 2:
+            flag = 0
+            for i in range(len(nums) - 1):
+                if nums[len(nums) - 2 - i] < nums[len(nums) - 1 - i]:
+                    index = len(nums) - 2 - i
+                    swap_area = len(nums) - index
+                    if swap_area == 2:
+                        temp = nums[index]
+                        del nums[index]
+                        nums.append(temp)
+                    else:
+                        temp = nums[index + 1]
+                        swap_index = index + 1
+                        for j in range(2, swap_area):
+                            if nums[index + j] <= nums[index]:
+                                break
+                            else:
+                                if nums[index + j] <= temp:
+                                    temp = nums[index + j]
+                                    swap_index = index + j
+                        nums[swap_index] = nums[index]
+                        nums[index] = temp
+                        swap_area -= 1
+                        if swap_area % 2 == 1:
+                            symcenter = index + swap_area / 2 + 1
+                            for j in range(swap_area / 2):
+                                temp = nums[symcenter - j - 1]
+                                nums[symcenter - j - 1] = nums[symcenter + j + 1]
+                                nums[symcenter + j + 1] = temp
+                        else:
+                            symcenter_right = index + swap_area / 2 + 1
+                            for j in range(swap_area / 2):
+                                temp = nums[symcenter_right - j - 1]
+                                nums[symcenter_right - j - 1] = nums[symcenter_right + j]
+                                nums[symcenter_right + j] = temp
+                    flag = 1
+                    break
+            if flag == 0:
+                if len(nums) % 2 == 1:
+                    symcenter = len(nums) / 2
+                    for i in range(len(nums) / 2):
+                        temp = nums[symcenter - i - 1]
+                        nums[symcenter - i - 1] = nums[symcenter + i + 1]
+                        nums[symcenter + i + 1] = temp
+                else:
+                    symcenter_right = len(nums) / 2
+                    for i in range(len(nums) / 2):
+                        temp = nums[symcenter_right - i - 1]
+                        nums[symcenter_right - i - 1] = nums[symcenter_right + i]
+                        nums[symcenter_right + i] = temp
+```
+
+### Note
+1. Find the next permutation that is bigger than the given one.
+2. <br>
+```
+Input: [9, 8, 6, 8, 7, 7, 4]
+From the lowest digit to higher digit. (from right to left)
+4 < 7, continue
+7 <= 7, continue
+7 < 8, continue
+8 > 6, we should change the permutation from 6 to the far right, which are 6, 8, 7, 7, 4.
+From right of 6, we find the smallest number that is bigger than 6, than swap the number with 6. We swap with the most right number.
+The smallest number that is bigger than 6 is 7
+Therefore, 7, 8, 7, 6, 4.
+Then, from right of 7, we should sort them in ascending order.
+Therefore, 7, 4, 6, 7, 8.
+Output: [9, 8, 7, 4, 6, 7, 8]
+```
+
+May 25th, 2018
