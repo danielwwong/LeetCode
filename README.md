@@ -60,6 +60,8 @@
 
 [30. Next Permutation `#31`](#30-next-permutation-31)
 
+[31. Longest Valid Parentheses `#32`](#31-longest-valid-parentheses-32)
+
 ## 1. Two Sum `#1`
 ### Problem
 Given an array of integers, return indices of the two numbers such that they add up to a specific target.
@@ -2799,3 +2801,128 @@ Output: [9, 8, 7, 4, 6, 7, 8]
 ```
 
 May 25th, 2018
+
+## 31. Longest Valid Parentheses `#32`
+### Problem
+Given a string containing just the characters '(' and ')', find the length of the longest valid (well-formed) parentheses substring.
+
+### Example
+- Example 1:
+```
+Input: "(()"
+Output: 2
+Explanation: The longest valid parentheses substring is "()"
+```
+
+- Example 2:
+```
+Input: ")()())"
+Output: 4
+Explanation: The longest valid parentheses substring is "()()"
+```
+
+### Solution
+```python
+class Solution(object):
+    def longestValidParentheses(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        flag = 0
+        reverse_flag = 0
+        result = 0
+        count = 0
+        left = 0
+        i = 0
+        while i <= len(s):
+            if reverse_flag == 0:
+                if i < len(s):
+                    if flag == 0:
+                        if s[i] == '(':
+                            flag = 1
+                            left += 1
+                    else:
+                        if left > 0:
+                            if s[i] == '(':
+                                left += 1
+                            else:
+                                left -= 1
+                                count += 1
+                        else:
+                            if s[i] == '(':
+                                left += 1
+                            else:
+                                result = max(count, result)
+                                count = 0
+                                flag = 0
+                                left = 0
+                    i += 1
+                else:
+                    if flag == 1 and left > 0:
+                        i = len(s) - (2 * count + left)
+                        reverse_flag = 1
+                    else:
+                        result = max(count, result)
+                        i += 1
+            else:
+                right = 0
+                flag = 0
+                count = 0
+                j = 0
+                while j <= len(s) - i:
+                    if j < len(s) - i:
+                        if flag == 0:
+                            if s[len(s) - j - 1] == ')':
+                                flag = 1
+                                right += 1
+                        else:
+                            if right > 0:
+                                if s[len(s) - j - 1] == ')':
+                                    right += 1
+                                else:
+                                    right -= 1
+                                    count += 1
+                            else:
+                                if s[len(s) - j - 1] == ')':
+                                    right += 1
+                                else:
+                                    result = max(count, result)
+                                    count = 0
+                                    flag = 0
+                                    right = 0
+                    else:
+                        result = max(count, result)
+                    j += 1
+                break
+        return result * 2
+```
+
+### Note
+1. Valid parentheses should start by '(' and end by ')'.
+2. Input: `"))())()()(()"`
+3. i = 0, start by ')', wrong, continue
+4. i = 1, start by ')', wrong, continue
+5. i = 2, start by '(', record `count_left += 1`
+6. i = 3, encounter ')', `count_left` > 0, `count_left -= 1`, `count += 1`
+7, i = 4, `count_left` = 0, start a new round, clear `count`, start by ')', wrong, continue
+8. i = 5, start by '(', record `count_left += 1`
+9. i = 6, encounter ')', `count_left` > 0, `count_left -= 1`
+10. i = 7, `count_left` = 0, start a new round, do not clear `count`, because start by '(', it's concatenated, record `count_left += 1`
+11. i = 8, encounter ')', `count_left` > 0, `count_left -= 1`, `count += 1`
+12. i = 9, `count_left` = 0, start a new round, do not clear `count`, because start by '(', it's concatenated, record `count_left += 1`
+13. i = 10, encounter `(`, record `count_left += 1`
+14. i = 11, encounter `)`, `count_left` > 0, `count_left -= 1`
+15. all characters have been gone through once, but `count_left > 0`
+16. from i = 5 to i = 11, `()()(()`, we go through from right to left again
+17. i = 11, start by ')', record `count_right += 1`
+18. i = 10, encounter '(', `count_right` > 0, `count_right -= 1`, `count += 1`
+19. i = 9, `count_right` = 0, start a new round, clear `count`, start by '(', wrong, continue
+20. i = 8, start by ')', record `count_right += 1`
+21. i = 7, encounter '(', `count_right` > 0, `count_right -= 1`, `count += 1`
+22. i = 6, `count_right` = 0, start a new round, do not clear `count`, because start by ')', it's concatenated, record `count_right += 1`
+23. i = 5, encounter '(', `count_right` > 0, `count_right -= 1`, `count += 1`
+24. finish
+25. get the biggest count ever shown in the process, it's the result
+
+May 26th, 2018
