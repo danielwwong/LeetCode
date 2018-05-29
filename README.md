@@ -62,6 +62,8 @@
 
 [31. Longest Valid Parentheses `#32`](#31-longest-valid-parentheses-32)
 
+[32. Search in Rotated Sorted Array `#33`](#32-search-in-rotated-sorted-array-33)
+
 ## 1. Two Sum `#1`
 ### Problem
 Given an array of integers, return indices of the two numbers such that they add up to a specific target.
@@ -2926,3 +2928,73 @@ class Solution(object):
 25. get the biggest count ever shown in the process, it's the result
 
 May 26th, 2018
+
+## 32. Search in Rotated Sorted Array `#33`
+### Problem
+Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand.
+
+(i.e., [0,1,2,4,5,6,7] might become [4,5,6,7,0,1,2]).
+
+You are given a target value to search. If found in the array return its index, otherwise return -1.
+
+You may assume no duplicate exists in the array.
+
+Your algorithm's runtime complexity must be in the order of O(log n).
+
+### Example
+- Example 1:
+```
+Input: nums = [4,5,6,7,0,1,2], target = 0
+Output: 4
+```
+
+- Example 2:
+```
+Input: nums = [4,5,6,7,0,1,2], target = 3
+Output: -1
+```
+
+### Solution
+```python
+class Solution(object):
+    def search(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: int
+        """
+        if len(nums) == 0:
+            return -1
+        return self.find(nums, target, 0)
+
+    def find(self, nums, target, count):
+        if target == nums[0]:
+            return count
+        if target == nums[len(nums) / 2]:
+            return count + len(nums) / 2
+        if len(nums) == 1:
+            return -1
+        if nums[0] > nums[len(nums) / 2]:
+            if target > nums[0]:
+                return self.find(nums[: len(nums) / 2], target, count)
+            else:
+                if target > nums[len(nums) / 2]:
+                    return self.find(nums[len(nums) / 2 :], target, count + len(nums) / 2)
+                else:
+                    return self.find(nums[: len(nums) / 2], target, count)
+        else:
+            if target > nums[len(nums) / 2]:
+                return self.find(nums[len(nums) / 2 :], target, count + len(nums) / 2)
+            else:
+                if target > nums[0]:
+                    return self.find(nums[: len(nums) / 2], target, count)
+                else:
+                    return self.find(nums[len(nums) / 2 :], target, count + len(nums) / 2)
+```
+
+### Note
+1. ![img](img/22.png)
+2. ![img](img/23.png)
+3. Compare `nums[0]` and `nums[len(nums) / 2]`, then compare `target` and `nums[0]` or `nums[len(nums) / 2]` to determine which part is `target` in.
+
+May 28th, 2018
