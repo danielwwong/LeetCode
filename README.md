@@ -66,6 +66,8 @@
 
 [33. Search for a Range `#34`](#33-search-for-a-range-34)
 
+[34. Search Insert Position `#35`](#34-search-insert-position-35)
+
 ## 1. Two Sum `#1`
 ### Problem
 Given an array of integers, return indices of the two numbers such that they add up to a specific target.
@@ -3081,5 +3083,83 @@ class Solution(object):
 
 ### Note
 [Solution](https://leetcode.com/problems/search-for-a-range/solution/), click on the link for better explanation.
+
+May 30th, 2018
+
+## 34. Search Insert Position `#35`
+### Problem
+Given a sorted array and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.
+
+You may assume no duplicates in the array.
+
+### Example
+- Example 1:
+```
+Input: [1,3,5,6], 5
+Output: 2
+```
+
+- Example 2:
+```
+Input: [1,3,5,6], 2
+Output: 1
+```
+
+- Example 3:
+```
+Input: [1,3,5,6], 7
+Output: 4
+```
+
+- Example 4:
+```
+Input: [1,3,5,6], 0
+Output: 0
+```
+
+### Solution
+```python
+class Solution(object):
+    def searchInsert(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: int
+        """
+        if len(nums) == 0:
+            return 0
+        if len(nums) == 1:
+            if target <= nums[0]:
+                return 0
+            else:
+                return 1
+        low = 0
+        high = len(nums) - 1
+        result = (low + high + 1) / 2
+        while low < high - 1:
+            if target > nums[result]:
+                low = result
+                result = (low + high + 1) / 2
+            elif target < nums[result]:
+                high = result
+                result = (low + high + 1) / 2
+            else:
+                return result
+        if low == 0:
+            if target <= nums[low]:
+                return 0
+        if target <= nums[high]:
+            return high
+        else:
+            return high + 1
+```
+
+### Note
+1. Consider all corner cases carefully.
+2. [1, 3] 1
+3. [1, 3] 3
+4. [1] 1
+5. [1, 3] 2
+6. Use two pointers, low and high. Compare the center number and update the pointers.
 
 May 30th, 2018
