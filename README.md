@@ -64,6 +64,8 @@
 
 [32. Search in Rotated Sorted Array `#33`](#32-search-in-rotated-sorted-array-33)
 
+[33. Search for a Range `#34`](#33-search-for-a-range-34)
+
 ## 1. Two Sum `#1`
 ### Problem
 Given an array of integers, return indices of the two numbers such that they add up to a specific target.
@@ -2998,3 +3000,86 @@ class Solution(object):
 3. Compare `nums[0]` and `nums[len(nums) / 2]`, then compare `target` and `nums[0]` or `nums[len(nums) / 2]` to determine which part is `target` in.
 
 May 28th, 2018
+
+## 33. Search for a Range `#34`
+### Problem
+Given an array of integers nums sorted in ascending order, find the starting and ending position of a given target value.
+
+Your algorithm's runtime complexity must be in the order of O(log n).
+
+If the target is not found in the array, return [-1, -1].
+
+### Example
+- Example 1:
+```
+Input: nums = [5,7,7,8,8,10], target = 8
+Output: [3,4]
+```
+
+- Example 2:
+```
+Input: nums = [5,7,7,8,8,10], target = 6
+Output: [-1,-1]
+```
+
+### Solution
+```python
+class Solution(object):
+    def searchRange(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        if len(nums) == 0:
+            return [-1, -1]
+        if len(nums) == 1:
+            if target == nums[0]:
+                return [0, 0]
+            else:
+                return [-1, -1]
+        result = []
+        left, right = self.find(nums, target, 0)
+        result.append(left)
+        result.append(right)
+        return result
+
+    def find(self, nums, target, count):
+        if len(nums) == 1 and target != nums[0]:
+            return -1, -1
+        if target < nums[len(nums) / 2]:
+            return self.find(nums[: len(nums) / 2], target, count)
+        elif target > nums[len(nums) / 2]:
+            return self.find(nums[len(nums) / 2 :], target, count + len(nums) / 2)
+        else:
+            if len(nums) > 1:
+                left = self.findleft(nums[: len(nums) / 2], target, count)
+                right = self.findright(nums[len(nums) / 2 :], target, count + len(nums) / 2)
+                return left, right
+            else:
+                return 0, 0
+
+    def findleft(self, nums, target, count):
+        if len(nums) == 1:
+            if nums[0] == target:
+                return count
+            else:
+                return count + 1
+        if target > nums[len(nums) / 2]:
+            return self.findleft(nums[len(nums) / 2 :], target, count + len(nums) / 2)
+        else:
+            return self.findleft(nums[: len(nums) / 2], target, count)
+
+    def findright(self, nums, target, count):
+        if len(nums) == 1:
+            return count
+        if target < nums[len(nums) / 2]:
+            return self.findright(nums[: len(nums) / 2], target, count)
+        else:
+            return self.findright(nums[len(nums) / 2 :], target, count + len(nums) / 2)
+```
+
+### Note
+[Solution](https://leetcode.com/problems/search-for-a-range/solution/), click on the link for better explanation.
+
+May 30th, 2018
