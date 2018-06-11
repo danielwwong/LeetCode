@@ -68,6 +68,8 @@
 
 [34. Search Insert Position `#35`](#34-search-insert-position-35)
 
+[35. Valid Sudoku `#36`](#35-valid-sudoku-36)
+
 ## 1. Two Sum `#1`
 ### Problem
 Given an array of integers, return indices of the two numbers such that they add up to a specific target.
@@ -3163,3 +3165,108 @@ class Solution(object):
 6. Use two pointers, low and high. Compare the center number and update the pointers.
 
 May 30th, 2018
+
+## 35. Valid Sudoku `#36`
+### Problem
+Determine if a 9x9 Sudoku board is valid. Only the filled cells need to be validated according to the following rules:
+
+1. Each row must contain the digits 1-9 without repetition.
+2. Each column must contain the digits 1-9 without repetition.
+3. Each of the 9 3x3 sub-boxes of the grid must contain the digits 1-9 without repetition.
+
+![img](img/24.png)
+
+A partially filled sudoku which is valid.
+
+The Sudoku board could be partially filled, where empty cells are filled with the character '.'.
+
+**Note:**
+
+- A Sudoku board (partially filled) could be valid but is not necessarily solvable.
+- Only the filled cells need to be validated according to the mentioned rules.
+- The given board contain only digits 1-9 and the character '.'.
+- The given board size is always 9x9.
+
+### Example
+- Example 1:
+```
+Input:
+[
+  ["5","3",".",".","7",".",".",".","."],
+  ["6",".",".","1","9","5",".",".","."],
+  [".","9","8",".",".",".",".","6","."],
+  ["8",".",".",".","6",".",".",".","3"],
+  ["4",".",".","8",".","3",".",".","1"],
+  ["7",".",".",".","2",".",".",".","6"],
+  [".","6",".",".",".",".","2","8","."],
+  [".",".",".","4","1","9",".",".","5"],
+  [".",".",".",".","8",".",".","7","9"]
+]
+Output: true
+```
+
+- Example 2:
+```
+Input:
+[
+  ["8","3",".",".","7",".",".",".","."],
+  ["6",".",".","1","9","5",".",".","."],
+  [".","9","8",".",".",".",".","6","."],
+  ["8",".",".",".","6",".",".",".","3"],
+  ["4",".",".","8",".","3",".",".","1"],
+  ["7",".",".",".","2",".",".",".","6"],
+  [".","6",".",".",".",".","2","8","."],
+  [".",".",".","4","1","9",".",".","5"],
+  [".",".",".",".","8",".",".","7","9"]
+]
+Output: false
+Explanation: Same as Example 1, except with the 5 in the top left corner being
+    modified to 8. Since there are two 8's in the top left 3x3 sub-box, it is invalid.
+```
+
+### Solution
+```python
+class Solution(object):
+    def isValidSudoku(self, board):
+        """
+        :type board: List[List[str]]
+        :rtype: bool
+        """
+        buffer_map = {}
+        for i in range(9):
+            buffer_map.clear()
+            for j in range(9):
+                if board[i][j] != '.':
+                    if buffer_map.get(board[i][j]) != None:
+                        return False
+                    else:
+                        buffer_map[board[i][j]] = 1
+        buffer_map.clear()
+        for i in range(9):
+            buffer_map.clear()
+            for j in range(9):
+                if board[j][i] != '.':
+                    if buffer_map.get(board[j][i]) != None:
+                        return False
+                    else:
+                        buffer_map[board[j][i]] = 1
+        buffer_map.clear()
+        for m in range(3):
+            i_start = m * 3
+            for n in range(3):
+                buffer_map.clear()
+                j_start = n * 3
+                for i in range(3):
+                    for j in range(3):
+                        if board[i_start + i][j_start + j] != '.':
+                            if buffer_map.get(board[i_start + i][j_start + j]) != None:
+                                return False
+                            else:
+                                buffer_map[board[i_start + i][j_start + j]] = 1
+        return True
+```
+
+### Note
+Check the board according to Sudoku rules.
+
+June 11th, 2018
